@@ -32,6 +32,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <div className="min-h-screen bg-background">
+      <div className="bg-red-500 text-white text-8xl">THIS PAGE IS UNDER CONSTRUCTION</div>
       <SiteHeader variant="transparent" />
 
       {/* Hero */}

@@ -68,7 +68,7 @@ const PACKAGES: Pkg[] = [
     tagline: "Elevated Living Experience",
     ideal:
       "Clients who want a more intentional, cohesive and personalized spiritual atmosphere.",
-    price: "₦2,000,000 – ₦3,200,000",
+    price: "₦2,000,000 – ₦3,400,000",
     totalFrames: "13–16 frames",
     icon: Sparkles,
     featured: true,
@@ -101,7 +101,7 @@ const PACKAGES: Pkg[] = [
     tagline: "Full Luxury Transformation",
     ideal:
       "Clients who want a deeply intentional, statement-level and immersive spiritual environment.",
-    price: "₦3,300,000 – ₦5,500,000+",
+    price: "₦3,500,000 – ₦5,500,000+",
     totalFrames: "18–25+ frames",
     icon: Crown,
     highlights: [
@@ -165,8 +165,8 @@ export default function PackagesPage() {
           </h1>
           <p className="animate-fade-up-delay-2 mx-auto mt-6 max-w-2xl font-sans text-base font-light leading-relaxed text-primary-foreground/75 md:text-lg">
             Three curated experiences crafted for a 5-bedroom one-storey duplex —
-            each one designed to bring quiet luxury and intentional storytelling
-            into every room.
+            each one designed to elevate the physical outlook and create an inspiring spiritual atmosphere
+            in every corner.
           </p>
         </div>
       </section>
