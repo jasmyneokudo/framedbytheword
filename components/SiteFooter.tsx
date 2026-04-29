@@ -20,7 +20,7 @@ export function SiteFooter() {
               Packages
             </Link>
             <a
-              href="mailto:hello@framedwiththeword.com"
+              href="mailto:framedwiththeword@gmail.com"
               className="flex items-center gap-2 font-sans text-sm text-primary-foreground/70 transition-colors hover:text-gold"
             >
               <Mail className="h-4 w-4" />

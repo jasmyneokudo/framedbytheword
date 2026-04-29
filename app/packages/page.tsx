@@ -282,7 +282,7 @@ export default function PackagesPage() {
                     variant={pkg.featured ? "default" : "outline"}
                     size="lg"
                   >
-                    <a href="mailto:hello@framedwiththeword.com?subject=Enquiry%20—%20{pkg.name}%20Package">
+                    <a href="mailto:framedwiththeword@gmailcom?subject=Enquiry%20—%20{pkg.name}%20Package">
                       Enquire about {pkg.name}
                     </a>
                   </Button>
@@ -449,7 +449,7 @@ export default function PackagesPage() {
         </p>
         <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90">
-            <a href="mailto:hello@framedwiththeword.com?subject=Package%20Enquiry">
+            <a href="mailto:framedwiththeword@gmail.com?subject=Package%20Enquiry">
               Begin Your Project
             </a>
           </Button>
