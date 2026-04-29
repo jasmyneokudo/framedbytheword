@@ -8,7 +8,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Interior Styling Packages — FramedWithTheWord",
   description:
-    "Three curated Scripture Frame interior styling packages — Essence, Signature and Prestige — for a refined, spiritually intentional home.",
+    "Three curated Scripture Frame interior styling packages — Essence, Signature and Prestige — for a refined, intentional atmosphere.",
   openGraph: {
     title: "Interior Styling Packages — FramedWithTheWord",
     description:
@@ -37,7 +37,7 @@ const PACKAGES: Pkg[] = [
     name: "Essence",
     tagline: "Foundational Experience",
     ideal:
-      "Clients who want a clean, spiritually uplifting touch across key areas of the home, with a flexible and guided setup approach.",
+      "Clients who want simple but purpose driven atmosphere across key areas of the home.",
     price: "₦1,300,000 – ₦1,900,000",
     totalFrames: "7–12 premium frames",
     icon: Leaf,
@@ -67,7 +67,7 @@ const PACKAGES: Pkg[] = [
     name: "Signature",
     tagline: "Elevated Living Experience",
     ideal:
-      "Clients who want a more intentional, cohesive and personalized spiritual atmosphere.",
+      "Clients who want a more intentional, cohesive and personalized faith-filled atmosphere.",
     price: "₦2,000,000 – ₦3,400,000",
     totalFrames: "13–16 frames",
     icon: Sparkles,
@@ -100,7 +100,7 @@ const PACKAGES: Pkg[] = [
     name: "Prestige",
     tagline: "Full Luxury Transformation",
     ideal:
-      "Clients who want a deeply intentional, statement-level and immersive spiritual environment.",
+      "Clients who want a deeply intentional, statement-level and immersive faith-filled environment.",
     price: "₦3,500,000 – ₦5,500,000+",
     totalFrames: "18–25+ frames",
     icon: Crown,
@@ -128,7 +128,7 @@ const PACKAGES: Pkg[] = [
     valueAdds: [
       "Strong visual impact in transitional spaces",
       "Luxury, gallery-style finishing",
-      "Highly personalized spiritual storytelling",
+      "Highly personalized scriptural storytelling",
     ],
   },
 ];
@@ -165,7 +165,7 @@ export default function PackagesPage() {
           </h1>
           <p className="animate-fade-up-delay-2 mx-auto mt-6 max-w-2xl font-sans text-base font-light leading-relaxed text-primary-foreground/75 md:text-lg">
             Three curated experiences crafted for a 5-bedroom one-storey duplex —
-            each one designed to elevate the physical outlook and create an inspiring spiritual atmosphere
+            each one designed to elevate the physical outlook and create an inspiring faith-filled atmosphere
             in every corner.
           </p>
         </div>
@@ -314,7 +314,7 @@ export default function PackagesPage() {
               {
                 step: "01",
                 title: "Design Consultation & Project Commitment",
-                amount: "₦100,000 – ₦200,000",
+                amount: "₦200,000 – ₦350,000",
                 amountLabel: "Non-refundable consultation fee",
                 body: "Required to proceed after package selection. Covers project planning, space assessment, and design direction & layout strategy.",
                 note: "Fully deducted from the final project cost upon confirmation.",
