@@ -187,7 +187,7 @@ export default function PackagesPage() {
               >
                 {pkg.featured && (
                   <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gold px-4 py-1 font-sans text-[10px] font-medium uppercase tracking-[0.2em] text-gold-foreground">
-                    Most Loved
+                    Recommended
                   </span>
                 )}
 
@@ -282,8 +282,9 @@ export default function PackagesPage() {
                     variant={pkg.featured ? "default" : "outline"}
                     size="lg"
                   >
-                    <a href="mailto:framedwiththeword@gmailcom?subject=Enquiry%20—%20{pkg.name}%20Package">
-                      Enquire about {pkg.name}
+
+                    <a href={pkg.id === "essence" ? "https://wa.link/i8hne5" : pkg.id === "signature" ? "https://wa.link/9xcyy5" :  "https://wa.link/2g8hi3"}>
+                      Book {pkg.name} package
                     </a>
                   </Button>
                 </div>
