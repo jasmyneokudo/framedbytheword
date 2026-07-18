@@ -7,6 +7,7 @@ import { useCart } from "@/lib/cart-context";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface ProductCardProps {
   product: Product;
@@ -42,6 +43,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
   return (
     <article className="group flex flex-col overflow-hidden rounded-lg border border-border bg-card transition-all duration-500 hover:shadow-xl">
+      <Link href={`/product/${product.id}`} className="block">
       <div className="relative aspect-[4/5] overflow-hidden bg-muted">
         <Image
           src={product.image}
@@ -143,6 +145,7 @@ export function ProductCard({ product }: ProductCardProps) {
           </Button>
         </div>
       </div>
+   </Link>
     </article>
   );
 }

@@ -4,7 +4,7 @@ import { calculatePrice, getProduct, type SizeId } from "./products";
 
 export interface CartItem {
   id: string; // unique per line: productId-sizeId-customW-customH
-  productId: string;
+  productId: number;
   sizeId: SizeId;
   customWidth?: number;
   customHeight?: number;

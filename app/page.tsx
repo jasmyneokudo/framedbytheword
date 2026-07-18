@@ -32,7 +32,6 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <div className="min-h-screen bg-background">
-      <div className="bg-red-500 text-white text-8xl">THIS PAGE IS UNDER CONSTRUCTION</div>
       <SiteHeader variant="transparent" />
 
       {/* Hero */}
@@ -62,9 +61,9 @@ export default function Home() {
             <Button asChild size="lg" className="bg-gold text-gold-foreground hover:bg-gold/90">
               <a href="#shop">Shop the Collection</a>
             </Button>
-            <Button asChild size="lg" variant="outline" className="border-primary-foreground/30 bg-transparent text-primary-foreground hover:bg-primary-foreground/10">
-              <Link href="/packages">View Styling Packages</Link>
-            </Button>
+            {/* <Button asChild size="lg" variant="outline" className="border-primary-foreground/30 bg-transparent text-primary-foreground hover:bg-primary-foreground/10">
+              <Link href="/packages">Request a Custom Quote</Link>
+            </Button> */}
           </div>
         </div>
       </section>
@@ -73,7 +72,7 @@ export default function Home() {
       <section className="border-b border-border bg-cream/40 py-12">
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 px-6 md:grid-cols-3">
           {[
-            { title: "Crafted to Last", body: "Museum-grade printing on archival paper, hand-finished frames built for generations." },
+            { title: "Crafted with Intention", body: "Clean, high quality design, perfectly framed for your interior." },
             { title: "Perfectly Sized", body: "Three considered sizes, plus custom dimensions tailored to your wall." },
             { title: "Delivered with Care", body: "Each frame is packaged and dispatched nationwide with white-glove attention." },
           ].map((f) => (
@@ -100,7 +99,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {PRODUCTS.map((product) => (
+            {PRODUCTS.map((product, index) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
