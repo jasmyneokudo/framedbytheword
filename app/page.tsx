@@ -1,13 +1,13 @@
 import Image from "next/image";
 
-import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { CartDrawer } from "@/components/CartDrawer";
 import { ProductCard } from "@/components/ProductCard";
-import { PRODUCTS } from "@/lib/products";
+import { bestsellers, PRODUCTS } from "@/lib/products";
 import { Button } from "@/components/ui/button";
 import { Metadata } from "next";
+import { Sparkles } from "lucide-react";
 
 const heroImg = "/frames/landing-hero.jepg"; // must be a PUBLIC path
 
@@ -85,6 +85,30 @@ export default function Home() {
         </div>
       </section>
 
+       {/* Bestsellers */}
+      <section className="border-b border-border bg-cream/40 py-16 md:py-20">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="mb-10 flex items-end justify-between gap-6">
+            <div>
+              <p className="font-sans text-xs uppercase tracking-[0.3em] text-gold flex items-center gap-2">
+                <Sparkles className="h-3.5 w-3.5" /> Most Loved
+              </p>
+              <h2 className="mt-2 font-serif text-3xl font-medium text-foreground md:text-4xl">
+                Bestsellers
+              </h2>
+            </div>
+            <a href="#collections" className="hidden md:inline font-sans text-xs uppercase tracking-widest text-muted-foreground hover:text-foreground">
+              Explore All →
+            </a>
+          </div>
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {bestsellers.map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Shop grid */}
       <section id="shop" className="py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-6">
@@ -94,12 +118,12 @@ export default function Home() {
               Scripture Frames, Curated for Every Space
             </h2>
             <p className="mt-4 font-sans text-base font-light leading-relaxed text-muted-foreground">
-              Select your verse, choose a size, and we'll craft it for you. Custom dimensions available on every piece.
+              Select your verse, choose a size, and we&apos;ll craft it for you. Custom dimensions available on every piece.
             </p>
           </div>
 
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {PRODUCTS.map((product, index) => (
+            {PRODUCTS.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>

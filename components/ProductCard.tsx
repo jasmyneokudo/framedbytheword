@@ -16,34 +16,38 @@ interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps) {
   const { addItem } = useCart();
   const [size, setSize] = useState<SizeId>("12x16");
-  const [customW, setCustomW] = useState<string>("");
-  const [customH, setCustomH] = useState<string>("");
+  // const [customW, setCustomW] = useState<string>("");
+  // const [customH, setCustomH] = useState<string>("");
 
-  const cw = parseFloat(customW);
-  const ch = parseFloat(customH);
-  const customValid = size !== "custom" || (cw >= 6 && cw <= 96 && ch >= 6 && ch <= 96);
+  // const cw = parseFloat(customW);
+  // const ch = parseFloat(customH);
+  // const customValid = size !== "custom" || (cw >= 6 && cw <= 96 && ch >= 6 && ch <= 96);
 
   const price = calculatePrice(
     product.basePrice,
     size,
-    Number.isFinite(cw) ? cw : undefined,
-    Number.isFinite(ch) ? ch : undefined,
+    // Number.isFinite(cw) ? cw : undefined,
+    // Number.isFinite(ch) ? ch : undefined,
   );
 
+  console.log('product id', product.id);
+  
   const handleAdd = () => {
-    if (!customValid) return;
+    alert("he")
+    console.log('product id', product.id, size);
+    // if (!customValid) return;
     addItem({
-      productId: product.id,
+      productId: product.key,
       sizeId: size,
       quantity: 1,
-      customWidth: size === "custom" ? cw : undefined,
-      customHeight: size === "custom" ? ch : undefined,
+      // customWidth: size === "custom" ? cw : undefined,
+      // customHeight: size === "custom" ? ch : undefined,
     });
   };
 
   return (
     <article className="group flex flex-col overflow-hidden rounded-lg border border-border bg-card transition-all duration-500 hover:shadow-xl">
-      <Link href={`/product/${product.id}`} className="block">
+      <Link href={`/product/${product.key}`} className="block">
       <div className="relative aspect-[4/5] overflow-hidden bg-muted">
         <Image
           src={product.image}
@@ -60,7 +64,7 @@ export function ProductCard({ product }: ProductCardProps) {
           <h3 className="font-serif text-lg font-medium text-foreground">{product.name}</h3>
           <p className="mt-1 font-sans text-xs uppercase tracking-widest text-gold">{product.reference}</p>
           <p className="mt-2 font-sans text-sm font-light italic text-muted-foreground line-clamp-2">
-            &quot;{product.verse}&quot;
+            &quot;{product.tags}&quot;
           </p>
         </div>
 
@@ -85,7 +89,7 @@ export function ProductCard({ product }: ProductCardProps) {
             ))}
           </div>
 
-          {size === "custom" && (
+          {/* {size === "custom" && (
             <div className="grid grid-cols-2 gap-2">
               <div>
                 <label className="block font-sans text-[10px] uppercase tracking-widest text-muted-foreground mb-1">
@@ -123,7 +127,7 @@ export function ProductCard({ product }: ProductCardProps) {
                 </p>
               )}
             </div>
-          )}
+          )} */}
         </div>
 
         <div className="mt-5 flex items-end justify-between border-t border-border pt-4">
@@ -136,7 +140,8 @@ export function ProductCard({ product }: ProductCardProps) {
           <Button
             type="button"
             onClick={handleAdd}
-            disabled={!customValid || price === 0}
+            // disabled={!customValid || price === 0}
+            disabled={price === 0}
             size="sm"
             className="bg-primary text-primary-foreground hover:bg-primary/90"
           >

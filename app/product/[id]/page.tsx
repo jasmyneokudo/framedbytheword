@@ -11,10 +11,11 @@ import {
   // SIZES,
   calculatePrice,
   formatNaira,
+  getProduct,
   // getProduct,
   type SizeId,
 } from "@/lib/products";
-import { Check, Clock, Lock, Route, ShieldCheck, Sparkles, TrendingDown, Users, X } from "lucide-react";
+import { Check, Clock, Lock, ShieldCheck, Sparkles, TrendingDown, Users, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -102,25 +103,29 @@ function useCountdown(target: number) {
   return { d, h, m, s, done: diff === 0, diff };
 }
 
-const SIZE_MAP: { key: "small" | "medium" | "large"; sizeId: SizeId; label: string; dims: string }[] = [
-  { key: "small", sizeId: "12x16", label: "Small", dims: '12" × 16"' },
-  { key: "medium", sizeId: "16x24", label: "Medium", dims: '16" × 24"' },
+const SIZE_MAP: { key: "small" | "medium" | "big" | "large"; sizeId: SizeId; label: string; dims: string }[] = [
+  { key: "small", sizeId: "8x12", label: "Small", dims: '8" × 12"' },
+  { key: "medium", sizeId: "12x16", label: "Medium", dims: '12" × 16"' },
+  { key: "big", sizeId: "16x24", label: "Big", dims: '16" × 24"' },
   { key: "large", sizeId: "24x36", label: "Large", dims: '24" × 36"' },
 ];
 
 export default function Home({ params }: { params: Promise<{ id: string}>}) {
   const { id } = use(params);
-  const product = PRODUCTS[Number(id)];
+  const product = getProduct(id);
+  // console.log('prodict id: ', product, id);
+  
   const router = useRouter();
 //   const navigate = useNavigate();
-  const { addItem, openCart } = useCart();
+  // const { addItem, openCart, items } = useCart();
+  const { addItem, items } = useCart();
 
   const [batch, setBatch] = useState<BatchState>(() => loadBatch());
-  const productClaimed = batch.claimed[product.id] ?? 6; // seeded so first tier shows 6/10
+  const productClaimed = batch.claimed[product?.id ?? 0] ?? 6; // seeded so first tier shows 6/10
   const tiers = tiersFor(productClaimed);
   const active = activeTier(tiers);
 
-  const [sizeKey, setSizeKey] = useState<"small" | "medium" | "large">("medium");
+  const [sizeKey, setSizeKey] = useState<"small" | "medium" | "big" | "large">("medium");
   const selectedSize = SIZE_MAP.find((s) => s.key === sizeKey)!;
   const regularPrice = calculatePrice(product.basePrice, selectedSize.sizeId);
   const yourPrice = Math.round(regularPrice * (1 - active.discount));
@@ -167,7 +172,7 @@ export default function Home({ params }: { params: Promise<{ id: string}>}) {
     saveBatch(nextBatch);
     setBatch(nextBatch);
 
-    addItem({ productId: product.id, sizeId: selectedSize.sizeId, quantity: 1 });
+    addItem({ productId: product.key, sizeId: selectedSize.sizeId, quantity: 1 });
     setShowReserve(false);
     // setTimeout(() => navigate({ to: "/checkout" }), 400);
   };
@@ -238,7 +243,7 @@ export default function Home({ params }: { params: Promise<{ id: string}>}) {
               {product.name}
             </h1>
             <p className="mt-3 font-sans text-base italic font-light text-muted-foreground">
-              &quot;{product.verse}&quot;
+              &quot;{product.tags}&quot;
             </p>
 
             <div className="mt-6 rounded-lg border border-gold/40 bg-gold/5 p-5">
@@ -252,7 +257,7 @@ export default function Home({ params }: { params: Promise<{ id: string}>}) {
             {/* Size */}
             <div className="mt-8">
               <p className="font-sans text-[11px] uppercase tracking-widest text-muted-foreground">Select size</p>
-              <div className="mt-3 grid grid-cols-3 gap-2">
+              <div className="mt-3 grid grid-cols-4 gap-2">
                 {SIZE_MAP.map((s) => (
                   <button
                     key={s.key}
@@ -594,7 +599,7 @@ export default function Home({ params }: { params: Promise<{ id: string}>}) {
       )}
 
       {/* Reservation timer banner */}
-      {reserved && !reservation.done && (
+      {reserved && !reservation.done && items.length !== 0 && (
         <div className="fixed top-20 right-4 z-40 rounded-lg border border-gold bg-background/95 p-4 shadow-lg backdrop-blur animate-fade-in">
           <p className="font-sans text-[10px] uppercase tracking-widest text-gold">Reserved for you</p>
           <p className="mt-1 font-mono text-lg text-foreground">

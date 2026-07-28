@@ -80,17 +80,31 @@ export default function Home() {
 //       setSubmitting(false);
 //     }, 600);
 //   };
-
+console.log('Items', items);
     const componentProps = {
       email: formData.email,
       amount: subtotal * 100,
       metadata: {
         custom_fields: [
           {
-            display_name: "Customer ID",
-            variable_name: "customer_id",
-            value: "CUST123",
+            display_name: "Customer Info",
+            variable_name: "Customer Info",
+            value: `name: ${formData.fullName}, address: ${formData.address}, city: ${formData.city}, state: ${formData.state}, phone: ${formData.phone}, notes: ${formData.notes}`,
           },
+          {
+            display_name: "Order Details",
+            variable_name: "Order_details",
+            value: items
+              .map((item) => {
+                const product = getProduct(item.productId);
+                if (!product) return null;
+                const sizeMeta = SIZES.find((s) => s.id === item.sizeId);
+                const sizeLabel = sizeMeta?.label;
+                return `${product.name} (${sizeLabel}) × ${item.quantity}`;
+              })
+              .filter(Boolean)
+              .join(", "),
+          }
         ],
       },
       publicKey,
@@ -98,9 +112,6 @@ export default function Home() {
                 ? "Placing Order…"
                 : `Place Order — ${formatNaira(subtotal)}`}`,
       onSuccess: async () => {
-          // await sendRequestDetails();
-        //   resetCustomerRequest();
-        //   router.push('/executive');
         setSubmitting(true);
         alert(
           "Your request has been successfully dispatched and our team will reach out to you via WhatsApp shortly."
@@ -113,7 +124,6 @@ export default function Home() {
       onClose: () => alert("Are you sure?"),
     };
 
-      // console.log("errors", errors, errors.phone, formData.phone, componentProps);
 
 
   if (submitted) {
