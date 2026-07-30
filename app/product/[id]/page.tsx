@@ -127,7 +127,7 @@ export default function Home({ params }: { params: Promise<{ id: string}>}) {
 
   const [sizeKey, setSizeKey] = useState<"small" | "medium" | "big" | "large">("medium");
   const selectedSize = SIZE_MAP.find((s) => s.key === sizeKey)!;
-  const regularPrice = calculatePrice(product.basePrice, selectedSize.sizeId);
+  const regularPrice = calculatePrice(product?.basePrice ?? 0, selectedSize.sizeId);
   const yourPrice = Math.round(regularPrice * (1 - active.discount));
   const saving = regularPrice - yourPrice;
 
@@ -160,19 +160,19 @@ export default function Home({ params }: { params: Promise<{ id: string}>}) {
   const submitReserve = (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.whatsapp) return;
-    try { localStorage.setItem(LEAD_KEY, JSON.stringify({ ...form, productId: product.id, at: Date.now() })); } catch {}
+    try { localStorage.setItem(LEAD_KEY, JSON.stringify({ ...form, productId: product?.id, at: new Date() })); } catch {}
     // eslint-disable-next-line react-hooks/purity
     const endsAt = Date.now() + RESERVATION_MS;
-    try { localStorage.setItem(RESERVE_KEY, JSON.stringify({ endsAt, productId: product.id })); } catch {}
+    try { localStorage.setItem(RESERVE_KEY, JSON.stringify({ endsAt, productId: product?.id })); } catch {}
     setReserved({ endsAt });
 
     // Claim a slot for this product and add to cart at discounted price
-    const nextClaimed = { ...batch.claimed, [product.id]: productClaimed + 1 };
+    const nextClaimed = { ...batch.claimed, [product?.id ?? 0]: productClaimed + 1 };
     const nextBatch = { ...batch, claimed: nextClaimed };
     saveBatch(nextBatch);
     setBatch(nextBatch);
 
-    addItem({ productId: product.key, sizeId: selectedSize.sizeId, quantity: 1 });
+    addItem({ productId: product?.key ?? "", sizeId: selectedSize.sizeId, quantity: 1 });
     setShowReserve(false);
     // setTimeout(() => navigate({ to: "/checkout" }), 400);
   };
@@ -216,8 +216,8 @@ export default function Home({ params }: { params: Promise<{ id: string}>}) {
           <div>
             <div className="relative overflow-hidden rounded-lg border border-border bg-muted">
               <img
-                src={product.image}
-                alt={product.name}
+                src={product?.image ?? ""}
+                alt={product?.name ?? ""}
                 className="h-full w-full object-cover"
               />
               <div className="absolute left-4 top-4 rounded-full bg-background/90 px-3 py-1.5 font-sans text-[10px] uppercase tracking-[0.25em] text-foreground backdrop-blur">
@@ -226,7 +226,7 @@ export default function Home({ params }: { params: Promise<{ id: string}>}) {
               </div>
             </div>
             <div className="mt-4 grid grid-cols-3 gap-3">
-              {[product.image, product.image, product.image].map((src, i) => (
+              {[product?.image, product?.image, product?.image].map((src, i) => (
                 <div key={i} className="aspect-square overflow-hidden rounded border border-border bg-muted">
                   <img src={src} alt="" className="h-full w-full object-cover opacity-90" />
                 </div>
@@ -237,13 +237,13 @@ export default function Home({ params }: { params: Promise<{ id: string}>}) {
           {/* Details */}
           <div>
             <p className="font-sans text-[11px] uppercase tracking-[0.3em] text-gold">
-              {product.reference}
+              {product?.reference}
             </p>
             <h1 className="mt-2 font-serif text-3xl font-medium leading-tight text-foreground md:text-4xl">
-              {product.name}
+              {product?.name}
             </h1>
             <p className="mt-3 font-sans text-base italic font-light text-muted-foreground">
-              &quot;{product.tags}&quot;
+              &quot;{product?.tags}&quot;
             </p>
 
             <div className="mt-6 rounded-lg border border-gold/40 bg-gold/5 p-5">
@@ -466,7 +466,7 @@ export default function Home({ params }: { params: Promise<{ id: string}>}) {
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {[
               { icon: Users, v: `${claimedThisMonth}+`, l: "Frames reserved this batch" },
-              { icon: ShieldCheck, v: `${productClaimed}`, l: `Slots claimed for ${product.name}` },
+              { icon: ShieldCheck, v: `${productClaimed}`, l: `Slots claimed for ${product?.name}` },
               { icon: Sparkles, v: "4.9 / 5", l: "From verified customers" },
             ].map((s) => (
               <div key={s.l} className="rounded-lg border border-border bg-card p-8 text-center">
@@ -500,7 +500,7 @@ export default function Home({ params }: { params: Promise<{ id: string}>}) {
         <div className="mx-auto max-w-7xl px-6">
           <p className="font-sans text-[11px] uppercase tracking-[0.3em] text-gold">Also from the collection</p>
           <div className="mt-6 grid grid-cols-2 gap-6 md:grid-cols-4">
-            {PRODUCTS.filter((p) => p.id !== product.id).slice(0, 4).map((p) => (
+            {PRODUCTS.filter((p) => p.id !== product?.id).slice(0, 4).map((p) => (
               <Link
                 key={p.id}
                 href={`/product/${p.id}`}
@@ -527,7 +527,7 @@ export default function Home({ params }: { params: Promise<{ id: string}>}) {
         <div className="mx-auto flex max-w-7xl flex-col items-stretch gap-3 px-4 py-3 md:flex-row md:items-center md:justify-between md:px-6">
           <div className="flex items-center gap-4">
             <div className="hidden h-12 w-12 overflow-hidden rounded md:block">
-              <img src={product.image} alt="" className="h-full w-full object-cover" />
+              <img src={product?.image ?? ""} alt="" className="h-full w-full object-cover" />
             </div>
             <div>
               <p className="font-sans text-[10px] uppercase tracking-widest text-gold">
