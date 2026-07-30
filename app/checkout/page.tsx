@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { useDelivery } from "@/lib/delivery-context";
 
 const publicKey = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY as string;
 
@@ -43,6 +44,7 @@ export default function Home() {
   }>(null);
   // const [errors, setErrors] = useState<FormErrors>({});
   const [submitting, setSubmitting] = useState(false);
+   const { state } = useDelivery();
   const router = useRouter();
   const [formData, setFormData] = useState({
     fullName: "",
@@ -50,7 +52,7 @@ export default function Home() {
     phone: "",
     address: "",
     city: "",
-    state: "",
+    state: state,
     notes: "",
   });
 
@@ -271,7 +273,7 @@ console.log('Items', items);
                 <Field
                   name="state"
                   label="State"
-                  value={formData.state}
+                  value={formData.state ?? ""}
                   onChange={handleInputChange}
                   // error={errors.state}
                   required

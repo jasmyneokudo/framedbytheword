@@ -56,7 +56,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const addItem: CartContextValue["addItem"] = (input) => {
     const product = getProduct(input.productId);
     if (!product) return;
-    const unitPrice = calculatePrice(product.basePrice, input.sizeId, input.customWidth, input.customHeight);
+    // const unitPrice = calculatePrice(product.basePrice, input.sizeId, input.customWidth, input.customHeight);
+    const unitPrice = calculatePrice(product.basePrice, input.sizeId);
     const lineId = `${input.productId}-${input.sizeId}-${input.customWidth ?? 0}x${input.customHeight ?? 0}`;
     setItems((prev) => {
       const existing = prev.find((i) => i.id === lineId);

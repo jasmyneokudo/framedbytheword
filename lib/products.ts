@@ -547,15 +547,15 @@ const BASE_AREA = 12 * 16;
 export function calculatePrice(
   basePrice: number,
   sizeId: SizeId,
-  customWidth?: number,
-  customHeight?: number,
+  // customWidth?: number,
+  // customHeight?: number,
 ): number {
-  if (sizeId === "custom") {
-    if (!customWidth || !customHeight) return 0;
-    const ratePerSqIn = basePrice / BASE_AREA;
-    // Custom carries a 15% craftsmanship premium
-    return Math.round(ratePerSqIn * customWidth * customHeight * 1.15);
-  }
+  // if (sizeId === "custom") {
+  //   if (!customWidth || !customHeight) return 0;
+  //   const ratePerSqIn = basePrice / BASE_AREA;
+  //   // Custom carries a 15% craftsmanship premium
+  //   return Math.round(ratePerSqIn * customWidth * customHeight * 1.15);
+  // }
   const size = SIZES.find((s) => s.id === sizeId);
   if (!size) return basePrice;
   return Math.round(basePrice * size.multiplier);

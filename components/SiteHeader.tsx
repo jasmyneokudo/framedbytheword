@@ -3,6 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { ShoppingBag, Menu, X } from "lucide-react";
 import { useCart } from "@/lib/cart-context";
+import { DeliverySelector } from "./DeliverySelector";
 
 interface SiteHeaderProps {
   variant?: "transparent" | "solid";
@@ -16,9 +17,15 @@ export function SiteHeader({ variant = "transparent" }: SiteHeaderProps) {
   const wrapperBase = isTransparent
     ? "absolute left-0 right-0 top-0 z-30"
     : "sticky top-0 z-30 border-b border-border bg-background/95 backdrop-blur";
-  const linkBase = isTransparent ? "text-primary-foreground/80" : "text-foreground/70";
-  const brandColor = isTransparent ? "text-primary-foreground/95" : "text-foreground";
-  const iconColor = isTransparent ? "text-primary-foreground" : "text-foreground";
+  const linkBase = isTransparent
+    ? "text-primary-foreground/80"
+    : "text-foreground/70";
+  const brandColor = isTransparent
+    ? "text-primary-foreground/95"
+    : "text-foreground";
+  const iconColor = isTransparent
+    ? "text-primary-foreground"
+    : "text-foreground";
 
   return (
     <header className={wrapperBase}>
@@ -27,7 +34,8 @@ export function SiteHeader({ variant = "transparent" }: SiteHeaderProps) {
           href="/"
           className={`font-serif text-sm font-medium tracking-[0.2em] hover:text-gold transition-colors ${brandColor}`}
         >
-          FRAMED<span className="text-gold">·</span>WITH<span className="text-gold">·</span>THE<span className="text-gold">·</span>WORD
+          FWTW
+          {/* FRAMED<span className="text-gold">·</span>WITH<span className="text-gold">·</span>THE<span className="text-gold">·</span>WORD */}
         </Link>
 
         <nav className="hidden md:flex items-center gap-8">
@@ -54,6 +62,9 @@ export function SiteHeader({ variant = "transparent" }: SiteHeaderProps) {
             Client Suite
           </Link>
         </nav>
+        <div className="py-3 pl-5">
+          <DeliverySelector tone="dark" />
+        </div>
 
         <div className="flex items-center gap-2">
           <button
@@ -76,7 +87,11 @@ export function SiteHeader({ variant = "transparent" }: SiteHeaderProps) {
             aria-label="Toggle menu"
             className={`md:hidden inline-flex h-10 w-10 items-center justify-center rounded-full hover:text-gold transition-colors ${iconColor}`}
           >
-            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {mobileOpen ? (
+              <X className="h-5 w-5" />
+            ) : (
+              <Menu className="h-5 w-5" />
+            )}
           </button>
         </div>
       </div>
@@ -84,9 +99,27 @@ export function SiteHeader({ variant = "transparent" }: SiteHeaderProps) {
       {mobileOpen && (
         <div className="md:hidden border-t border-border bg-background">
           <nav className="flex flex-col px-6 py-4">
-            <Link href="/" onClick={() => setMobileOpen(false)} className="py-3 font-sans text-sm uppercase tracking-[0.2em] text-foreground">Shop</Link>
-            <Link href="/packages" onClick={() => setMobileOpen(false)} className="py-3 font-sans text-sm uppercase tracking-[0.2em] text-foreground">Packages</Link>
-            <Link href="/clients/okudo" onClick={() => setMobileOpen(false)} className="py-3 font-sans text-sm uppercase tracking-[0.2em] text-foreground">Client Suite</Link>
+            <Link
+              href="/"
+              onClick={() => setMobileOpen(false)}
+              className="py-3 font-sans text-sm uppercase tracking-[0.2em] text-foreground"
+            >
+              Shop
+            </Link>
+            <Link
+              href="/packages"
+              onClick={() => setMobileOpen(false)}
+              className="py-3 font-sans text-sm uppercase tracking-[0.2em] text-foreground"
+            >
+              Packages
+            </Link>
+            <Link
+              href="/clients/okudo"
+              onClick={() => setMobileOpen(false)}
+              className="py-3 font-sans text-sm uppercase tracking-[0.2em] text-foreground"
+            >
+              Client Suite
+            </Link>
           </nav>
         </div>
       )}

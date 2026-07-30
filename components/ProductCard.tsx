@@ -37,7 +37,7 @@ export function ProductCard({ product }: ProductCardProps) {
     console.log('product id', product.id, size);
     // if (!customValid) return;
     addItem({
-      productId: product.key,
+      productId: product?.key ?? "",
       sizeId: size,
       quantity: 1,
       // customWidth: size === "custom" ? cw : undefined,
