@@ -318,10 +318,11 @@ console.log('Items', items);
                 const product = getProduct(item.productId);
                 if (!product) return null;
                 const sizeMeta = SIZES.find((s) => s.id === item.sizeId);
-                const sizeLabel =
-                  item.sizeId === "custom"
-                    ? `Custom ${item.customWidth}" × ${item.customHeight}"`
-                    : sizeMeta?.label;
+                // const sizeLabel =
+                //   item.sizeId === "custom"
+                //     ? `Custom ${item.customWidth}" × ${item.customHeight}"`
+                //     : sizeMeta?.label;
+                const sizeLabel =  sizeMeta?.label;
                 return (
                   <li key={item.id} className="flex gap-3 py-3">
                     <Image
