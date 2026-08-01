@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
@@ -10,14 +10,13 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import { useDelivery } from "@/lib/delivery-context";
+import { NIGERIAN_STATES, useDelivery } from "@/lib/delivery-context";
 
 const publicKey = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY as string;
 
-
 const PaystackButton = dynamic(
   () => import("react-paystack").then((mod) => mod.PaystackButton),
-  { ssr: false } // This ensures the component is only loaded on the client-side
+  { ssr: false }, // This ensures the component is only loaded on the client-side
 );
 
 // const checkoutSchema = z.object({
@@ -36,97 +35,139 @@ const PaystackButton = dynamic(
 
 // type FormErrors = Partial<Record<keyof z.infer<typeof checkoutSchema>, string>>;
 
+const FCT = "Federal Capital Territory (Abuja)";
+const LEAD_KEY = "fwtw_lead_v1";
+
+function deliveryFeeFor(state: string | null, itemsTotal: number) {
+  if (!state || state === FCT) return 0;
+  if (itemsTotal <= 20000) return 10000;
+  if (itemsTotal <= 60000) return 13000;
+  if (itemsTotal <= 100000) return 18000;
+  if (itemsTotal <= 150000) return 20000;
+  if (itemsTotal <= 200000) return 25000;
+  return 30000;
+}
+
 export default function Home() {
-  const { items, subtotal, clear } = useCart();
+  const { items, subtotal, listSubtotal, savings, clear } = useCart();
   const [submitted, setSubmitted] = useState<null | {
     orderId: string;
     name: string;
   }>(null);
   // const [errors, setErrors] = useState<FormErrors>({});
   const [submitting, setSubmitting] = useState(false);
-   const { state } = useDelivery();
+
+  const [lead, setLead] = useState<{
+    name?: string;
+    email?: string;
+    whatsapp?: string;
+  } | null>(null);
+  const { state: deliveryState, setState: setDeliveryState } = useDelivery();
+
+  const deliveryFee = deliveryFeeFor(deliveryState, subtotal);
+  const total = subtotal + deliveryFee;
+
   const router = useRouter();
   const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    phone: "",
+    fullName: lead?.name ?? "",
+    email: lead?.email ?? "",
+    phone: lead?.whatsapp ?? "",
     address: "",
     city: "",
-    state: state,
+    state: deliveryState ?? "",
     notes: "",
   });
 
-//   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-//     e.preventDefault();
-//     setErrors({});
-//     console.log("curr", e.currentTarget);
-//     console.log(e.target);
-//     const formData = new FormData(e.currentTarget);
-//     const raw = Object.fromEntries(formData.entries());
-//     const parsed = checkoutSchema.safeParse(raw);
-//     if (!parsed.success) {
-//       const next: FormErrors = {};
-//       for (const issue of parsed.error.issues) {
-//         const key = issue.path[0] as keyof FormErrors;
-//         if (!next[key]) next[key] = issue.message;
-//       }
-//       setErrors(next);
-//       return;
-//     }
-//     setSubmitting(true);
-//     // Simulate order placement (no backend)
-//     const orderId = `FWTW-${Date.now().toString(36).toUpperCase()}`;
-//     setTimeout(() => {
-//       setSubmitted({ orderId, name: parsed.data.fullName });
-//       clear();
-//       setSubmitting(false);
-//     }, 600);
-//   };
-console.log('Items', items);
-    const componentProps = {
-      email: formData.email,
-      amount: subtotal * 100,
-      metadata: {
-        custom_fields: [
-          {
-            display_name: "Customer Info",
-            variable_name: "Customer Info",
-            value: `name: ${formData.fullName}, address: ${formData.address}, city: ${formData.city}, state: ${formData.state}, phone: ${formData.phone}, notes: ${formData.notes}`,
-          },
-          {
-            display_name: "Order Details",
-            variable_name: "Order_details",
-            value: items
-              .map((item) => {
-                const product = getProduct(item.productId);
-                if (!product) return null;
-                const sizeMeta = SIZES.find((s) => s.id === item.sizeId);
-                const sizeLabel = sizeMeta?.label;
-                return `${product.name} (${sizeLabel}) × ${item.quantity}`;
-              })
-              .filter(Boolean)
-              .join(", "),
-          }
-        ],
-      },
-      publicKey,
-      text: ` ${submitting
-                ? "Placing Order…"
-                : `Place Order — ${formatNaira(subtotal)}`}`,
-      onSuccess: async () => {
-        setSubmitting(true);
-        alert(
-          "Your request has been successfully dispatched and our team will reach out to you via WhatsApp shortly."
-        );
-        setSubmitting(false);
-        const orderId = `FWTW-${new Date().toString().toUpperCase()}`;
-        setSubmitted({ orderId, name: formData.fullName });
-        clear();
-      },
-      onClose: () => alert("Are you sure?"),
-    };
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(LEAD_KEY);
+      const leadUser = raw ? JSON.parse(raw) : null;
+      if (raw) setLead(leadUser);
+      console.log("lead.name", lead?.name, deliveryState);
 
+      setFormData({
+        fullName: leadUser?.name ?? "",
+        email: leadUser?.email ?? "",
+        phone: leadUser?.whatsapp ?? "",
+        address: "",
+        city: "",
+        state: deliveryState ?? "",
+        notes: "",
+      });
+    } catch {
+      // ignore
+    }
+  }, []);
 
+  //   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //     e.preventDefault();
+  //     setErrors({});
+  //     console.log("curr", e.currentTarget);
+  //     console.log(e.target);
+  //     const formData = new FormData(e.currentTarget);
+  //     const raw = Object.fromEntries(formData.entries());
+  //     const parsed = checkoutSchema.safeParse(raw);
+  //     if (!parsed.success) {
+  //       const next: FormErrors = {};
+  //       for (const issue of parsed.error.issues) {
+  //         const key = issue.path[0] as keyof FormErrors;
+  //         if (!next[key]) next[key] = issue.message;
+  //       }
+  //       setErrors(next);
+  //       return;
+  //     }
+  //     setSubmitting(true);
+  //     // Simulate order placement (no backend)
+  //     const orderId = `FWTW-${Date.now().toString(36).toUpperCase()}`;
+  //     setTimeout(() => {
+  //       setSubmitted({ orderId, name: parsed.data.fullName });
+  //       clear();
+  //       setSubmitting(false);
+  //     }, 600);
+  //   };
+  console.log("Items", items);
+  const componentProps = {
+    email: formData.email,
+    amount: subtotal * 100,
+    metadata: {
+      custom_fields: [
+        {
+          display_name: "Customer Info",
+          variable_name: "Customer Info",
+          value: `name: ${formData.fullName}, address: ${formData.address}, city: ${formData.city}, state: ${formData.state}, phone: ${formData.phone}, notes: ${formData.notes}`,
+        },
+        {
+          display_name: "Order Details",
+          variable_name: "Order_details",
+          value: items
+            .map((item) => {
+              const product = getProduct(item.productId);
+              if (!product) return null;
+              const sizeMeta = SIZES.find((s) => s.id === item.sizeId);
+              const sizeLabel = sizeMeta?.label;
+              return `${product.name} (${sizeLabel}) × ${item.quantity}`;
+            })
+            .filter(Boolean)
+            .join(", "),
+        },
+      ],
+    },
+    publicKey,
+    text: ` ${
+      submitting ? "Placing Order…" : `Place Order — ${formatNaira(total)}`
+    }`,
+    onSuccess: async () => {
+      setSubmitting(true);
+      alert(
+        "Your request has been successfully dispatched and our team will reach out to you via WhatsApp shortly.",
+      );
+      setSubmitting(false);
+      const orderId = `FWTW-${new Date().toString().toUpperCase()}`;
+      setSubmitted({ orderId, name: formData.fullName });
+      clear();
+    },
+    onClose: () => alert("Are you sure?"),
+  };
 
   if (submitted) {
     return (
@@ -270,14 +311,34 @@ console.log('Items', items);
                   // error={errors.city}
                   required
                 />
-                <Field
+                {/* <Field
                   name="state"
                   label="State"
                   value={formData.state ?? ""}
                   onChange={handleInputChange}
                   // error={errors.state}
                   required
-                />
+                /> */}
+
+                <div>
+                  <label htmlFor="state" className="block font-sans text-xs uppercase tracking-widest text-muted-foreground mb-2">
+                    State<span className="text-gold"> *</span>
+                  </label>
+                  <select
+                    id="state"
+                    name="state"
+                    required
+                    value={deliveryState ?? ""}
+                    onChange={(e) => setDeliveryState(e.target.value)}
+                    className="w-full rounded border border-border bg-background px-3 py-2.5 font-sans text-sm text-foreground focus:border-gold focus:outline-none"
+                  >
+                    <option value="">Select your state</option>
+                    {NIGERIAN_STATES.map((s) => (
+                      <option key={s} value={s}>{s}</option>
+                    ))}
+                  </select>
+                  {/* {errors.state && <p className="mt-1 font-sans text-xs text-destructive">{errors.state}</p>} */}
+                </div>
               </div>
               <div>
                 <label
@@ -296,19 +357,28 @@ console.log('Items', items);
               </div>
             </fieldset>
 
-            <p className="font-sans text-xs text-muted-foreground">
-              By placing your order you agree to be contacted by our team to
-              finalize delivery.
-            </p>
+            {deliveryState === FCT && <p className="font-sans text-xs text-muted-foreground">
+              {/* By placing your order you agree to be contacted by our team to
+              finalize delivery. */}
+              Delivery logistics will be finalized via Whatsapp. You can either
+              Pickup at our pickup location in Area 1 or we can deliver to you
+              via a Dispatch rider (delivery fees apply)
+            </p>}
           </form>
 
-
-            <PaystackButton
-              disabled={submitting || formData.email === "" || formData.fullName === "" || formData.phone === "" || formData.address === "" || formData.city === "" || formData.state === ""}
-              {...componentProps}
-              className="w-full h-12 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 disabled:bg-gray-400"
-
-            />
+          <PaystackButton
+            disabled={
+              submitting ||
+              formData.email === "" ||
+              formData.fullName === "" ||
+              formData.phone === "" ||
+              formData.address === "" ||
+              formData.city === "" ||
+              formData.state === ""
+            }
+            {...componentProps}
+            className="w-full h-12 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 disabled:bg-gray-400"
+          />
 
           {/* Summary */}
           <aside className="h-fit rounded-lg border border-border bg-cream/40 p-6 lg:sticky lg:top-24">
@@ -324,7 +394,7 @@ console.log('Items', items);
                 //   item.sizeId === "custom"
                 //     ? `Custom ${item.customWidth}" × ${item.customHeight}"`
                 //     : sizeMeta?.label;
-                const sizeLabel =  sizeMeta?.label;
+                const sizeLabel = sizeMeta?.label;
                 return (
                   <li key={item.id} className="flex gap-3 py-3">
                     <Image
@@ -342,9 +412,24 @@ console.log('Items', items);
                       <p className="font-sans text-xs text-muted-foreground">
                         {sizeLabel} · Qty {item.quantity}
                       </p>
-                      <p className="mt-auto font-serif text-sm text-foreground">
+                      {/* <p className="mt-auto font-serif text-sm text-foreground">
                         {formatNaira(item.unitPrice * item.quantity)}
-                      </p>
+                      </p> */}
+                      {item.discount ? (
+                        <p className="font-sans text-[10px] uppercase tracking-widest text-gold">
+                          {(item.discount * 100).toFixed(0)}% off locked in
+                        </p>
+                      ) : null}
+                      <div className="mt-auto flex items-center gap-2">
+                        {item.discount ? (
+                          <span className="font-sans text-xs text-muted-foreground line-through">
+                            {formatNaira(item.listPrice * item.quantity)}
+                          </span>
+                        ) : null}
+                        <span className="font-serif text-sm text-foreground">
+                          {formatNaira(item.unitPrice * item.quantity)}
+                        </span>
+                      </div>
                     </div>
                   </li>
                 );
@@ -352,13 +437,29 @@ console.log('Items', items);
             </ul>
             <div className="mt-5 space-y-2 border-t border-border pt-5">
               <Row label="Subtotal" value={formatNaira(subtotal)} />
-              <Row label="Shipping" value="Calculated after order" muted />
+              {savings > 0 && (
+                <Row label="Discount" value={`−${formatNaira(savings)}`} />
+              )}
+              {/* <Row label="Shipping" value="Calculated after order" muted /> */}
+              <Row
+                label={
+                  deliveryState ? `Delivery (${deliveryState})` : "Delivery"
+                }
+                value={
+                  !deliveryState
+                    ? "Select a state"
+                    : deliveryFee === 0
+                      ? "Free — Abuja (FCT)"
+                      : formatNaira(deliveryFee)
+                }
+                muted={!deliveryState}
+              />
               <div className="flex items-center justify-between pt-2">
                 <span className="font-sans text-xs uppercase tracking-widest text-muted-foreground">
                   Total
                 </span>
                 <span className="font-serif text-xl text-foreground">
-                  {formatNaira(subtotal)}
+                  {formatNaira(total)}
                 </span>
               </div>
             </div>

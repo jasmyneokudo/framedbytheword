@@ -8,7 +8,7 @@ import { useCart } from "@/lib/cart-context";
 import { getProduct, formatNaira, SIZES } from "@/lib/products";
 
 export function CartDrawer() {
-  const { items, isOpen, closeCart, updateQty, removeItem, subtotal, totalCount } = useCart();
+  const { items, isOpen, closeCart, updateQty, removeItem, savings, subtotal, totalCount } = useCart();
 
   return (
     <Sheet open={isOpen} onOpenChange={(open) => !open && closeCart()}>
@@ -79,9 +79,24 @@ export function CartDrawer() {
                               <Plus className="h-3 w-3" />
                             </button>
                           </div>
-                          <p className="font-serif text-sm text-foreground">
+                          {/* <p className="font-serif text-sm text-foreground">
                             {formatNaira(item.unitPrice * item.quantity)}
-                          </p>
+                          </p> */}
+                          <div className="text-right">
+                            {item.discount ? (
+                              <>
+                                <p className="font-sans text-[10px] uppercase tracking-widest text-gold">
+                                  {(item.discount * 100).toFixed(0)}% off locked in
+                                </p>
+                                <p className="font-sans text-xs text-muted-foreground line-through">
+                                  {formatNaira(item.listPrice * item.quantity)}
+                                </p>
+                              </>
+                            ) : null}
+                            <p className="font-serif text-sm text-foreground">
+                              {formatNaira(item.unitPrice * item.quantity)}
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </li>
@@ -91,6 +106,12 @@ export function CartDrawer() {
             </div>
 
             <div className="border-t border-border px-6 py-5 space-y-4 bg-cream/40">
+            {savings > 0 && (
+                <div className="flex items-center justify-between">
+                  <span className="font-sans text-xs uppercase tracking-widest text-muted-foreground">You save</span>
+                  <span className="font-serif text-sm text-gold">−{formatNaira(savings)}</span>
+                </div>
+              )}
               <div className="flex items-center justify-between">
                 <span className="font-sans text-xs uppercase tracking-widest text-muted-foreground">Subtotal</span>
                 <span className="font-serif text-xl text-foreground">{formatNaira(subtotal)}</span>

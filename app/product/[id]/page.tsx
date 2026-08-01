@@ -172,7 +172,7 @@ export default function Home({ params }: { params: Promise<{ id: string}>}) {
     saveBatch(nextBatch);
     setBatch(nextBatch);
 
-    addItem({ productId: product?.key ?? "", sizeId: selectedSize.sizeId, quantity: 1 });
+    addItem({ productId: product?.key ?? "", sizeId: selectedSize.sizeId, quantity: 1, discount: active.discount  });
     setShowReserve(false);
     // setTimeout(() => navigate({ to: "/checkout" }), 400);
   };

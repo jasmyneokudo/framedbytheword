@@ -53,7 +53,7 @@ export const bestsellers: Product[] = [
     reference: "1 Thessalonians 5:16-18",
     qty: 3,
     image: "/frames/8.png",
-    basePrice: 45000,
+    basePrice: 60000,
   },
   {
     id: 3,
@@ -93,7 +93,7 @@ export const bestsellers: Product[] = [
     reference: "Hebrews.11:1 x Jeremiah.29:1 x 1 Corinthians.13:12",
     qty: 3,
     image: "/frames/58.jpeg",
-    basePrice: 28000,
+    basePrice: 60000,
   },
    {
     id: 7,
@@ -103,7 +103,7 @@ export const bestsellers: Product[] = [
     reference: "Philippians.4:6-7",
     qty: 3,
     image: "/frames/23.png",
-    basePrice: 32000,
+    basePrice: 60000,
   },
     {
     id: 8,
@@ -113,7 +113,7 @@ export const bestsellers: Product[] = [
     reference: "Joshua.24:15 x Psalm.27:1 x Psalms.124:1",
     qty: 3,
     image: "/frames/4.png",
-    basePrice: 45000,
+    basePrice: 60000,
   },
 ]
 
@@ -126,7 +126,7 @@ export const PRODUCTS: Product[] = [
     reference: "Romans.9:16 x Proverbs.4:18",
     qty: 2,
     image: "/frames/1.png",
-    basePrice: 32000,
+    basePrice: 40000,
   },
   {
     id: 1,
@@ -136,7 +136,7 @@ export const PRODUCTS: Product[] = [
     reference: "Numbers.23:19 x 1 Corinthians.2:5",
     qty: 2,
     image: "/frames/2.png",
-    basePrice: 32000,
+    basePrice: 40000,
   },
   {
     id: 2,
@@ -146,7 +146,7 @@ export const PRODUCTS: Product[] = [
     reference: "Genesis.16:13 x Luke.1:37",
     qty: 2,
     image: "/frames/3.png",
-    basePrice: 32000,
+    basePrice: 40000,
   },
   {
     id: 3,
@@ -156,7 +156,7 @@ export const PRODUCTS: Product[] = [
     reference: "Joshua.24:15 x Psalm.27:1 x Psalms.124:1",
     qty: 3,
     image: "/frames/4.png",
-    basePrice: 45000,
+    basePrice: 60000,
   },
   {
     id: 4,
@@ -166,7 +166,7 @@ export const PRODUCTS: Product[] = [
     reference: "John.14:27",
     qty: 2,
     image: "/frames/41.png",
-    basePrice: 32000,
+    basePrice: 40000,
   },
   {
     id: 5,
@@ -176,7 +176,7 @@ export const PRODUCTS: Product[] = [
     reference: "Numbers.6:24-26",
     qty: 4,
     image: "/frames/42.png",
-    basePrice: 70000,
+    basePrice: 80000,
   },
   {
     id: 6,
@@ -186,7 +186,7 @@ export const PRODUCTS: Product[] = [
     reference: "Numbers.6:24-26",
     qty: 4,
     image: "/frames/44.png",
-    basePrice: 70000,
+    basePrice: 80000,
   },
   {
     id: 7,
@@ -196,7 +196,7 @@ export const PRODUCTS: Product[] = [
     reference: "1 Thessalonians 5:16-18",
     qty: 3,
     image: "/frames/8.png",
-    basePrice: 45000,
+    basePrice: 60000,
   },
   {
     id: 8,
@@ -215,7 +215,7 @@ export const PRODUCTS: Product[] = [
     reference: "Proverbs.31:25 x Psalm 46:5",
     qty: 2,
     image: "/frames/10.png",
-    basePrice: 32000,
+    basePrice: 40000,
   },
   {
     id: 10,
@@ -225,7 +225,7 @@ export const PRODUCTS: Product[] = [
     reference: "Psalms.66:12 x Genesis.1:1",
     qty: 2,
     image: "/frames/11.png",
-    basePrice: 32000,
+    basePrice: 40000,
   },
   {
     id: 11,
@@ -235,7 +235,7 @@ export const PRODUCTS: Product[] = [
     reference: "Genesis.16:13 x Psalms.124:1",
     qty: 2,
     image: "/frames/12.png",
-    basePrice: 32000,
+    basePrice: 40000,
   },
   {
     id: 12,
@@ -245,7 +245,7 @@ export const PRODUCTS: Product[] = [
     reference: "Proverbs 3:6",
     qty: 2,
     image: "/frames/55.png",
-    basePrice: 32000,
+    basePrice: 40000,
   },
   {
     id: 13,
@@ -255,7 +255,7 @@ export const PRODUCTS: Product[] = [
     reference: "Psalms.119:105 x Joshua.24:15",
     qty: 2,
     image: "/frames/56.png",
-    basePrice: 32000,
+    basePrice: 40000,
   },
   {
     id: 14,
@@ -265,7 +265,7 @@ export const PRODUCTS: Product[] = [
     reference: "Philippians.4:13 x Joshua.1:9",
     qty: 2,
     image: "/frames/57.png",
-    basePrice: 32000,
+    basePrice: 40000,
   },
   {
     id: 15,
@@ -275,7 +275,7 @@ export const PRODUCTS: Product[] = [
     reference: "Hebrews.11:1 x Jeremiah.29:1 x 1 Corinthians.13:12",
     qty: 3,
     image: "/frames/58.jpeg",
-    basePrice: 28000,
+    basePrice: 60000,
   },
   {
     id: 16,
@@ -285,7 +285,7 @@ export const PRODUCTS: Product[] = [
     reference: "Psalms.44:3",
     qty: 2,
     image: "/frames/59.png",
-    basePrice:328000,
+    basePrice:40000,
   },
 
   {
@@ -293,8 +293,9 @@ export const PRODUCTS: Product[] = [
     name: "Acknowledge Him",
     tags: "In all your ways acknowledge Him",
     reference: "Proverbs 3:6",
+    qty: 2,
     image: "/frames/60.png",
-    basePrice: 28000,
+    basePrice: 40000,
   },
 
   {
@@ -302,8 +303,9 @@ export const PRODUCTS: Product[] = [
     name: "Acknowledge Him",
     tags: "In all your ways acknowledge Him",
     reference: "Proverbs 3:6",
+    qty: 9,
     image: "/frames/61.png",
-    basePrice: 28000,
+    basePrice: 60000,
   },
 
   {
@@ -311,8 +313,9 @@ export const PRODUCTS: Product[] = [
     name: "Acknowledge Him",
     tags: "In all your ways acknowledge Him",
     reference: "Proverbs 3:6",
+    qty: 9,
     image: "/frames/62.png",
-    basePrice: 28000,
+    basePrice: 60000,
   },
 
   {
@@ -320,8 +323,9 @@ export const PRODUCTS: Product[] = [
     name: "Acknowledge Him",
     tags: "In all your ways acknowledge Him",
     reference: "Proverbs 3:6",
+    qty: 9,
     image: "/frames/63.png",
-    basePrice: 28000,
+    basePrice: 60000,
   },
 
   {
@@ -329,24 +333,27 @@ export const PRODUCTS: Product[] = [
     name: "Acknowledge Him",
     tags: "In all your ways acknowledge Him",
     reference: "Proverbs 3:6",
+     qty: 9,
     image: "/frames/64.png",
-    basePrice: 28000,
+    basePrice: 60000,
   },
   {
     id: 22,
     name: "Acknowledge Him",
     tags: "In all your ways acknowledge Him",
     reference: "Proverbs 3:6",
+    qty: 9,
     image: "/frames/65.png",
-    basePrice: 28000,
+    basePrice: 60000,
   },
   {
     id: 23,
     name: "Acknowledge Him",
     tags: "In all your ways acknowledge Him",
     reference: "Proverbs 3:6",
+    qty: 9,
     image: "/frames/66.png",
-    basePrice: 28000,
+    basePrice: 60000,
   },
   {
     id: 24,
@@ -364,7 +371,7 @@ export const PRODUCTS: Product[] = [
     reference: "2 Kings.3:17 x Matthew.6:26-30",
     qty: 2,
     image: "/frames/20.png",
-    basePrice: 32000,
+    basePrice: 40000,
   },
   {
     id: 26,
@@ -373,7 +380,7 @@ export const PRODUCTS: Product[] = [
     tags: "children, peace",
     reference: "1 John.4:4 x Isaiah.54:13",
     image: "/frames/21.png",
-    basePrice: 32000,
+    basePrice: 40000,
   },
   {
     id: 27,
@@ -382,7 +389,7 @@ export const PRODUCTS: Product[] = [
     tags: "blessing, merxcy, favour",
     reference: "Psalms 67:1 x Psalms 67:7",
     image: "/frames/22.png",
-    basePrice: 32000,
+    basePrice: 40000,
   },
   {
     id: 28,
@@ -392,7 +399,7 @@ export const PRODUCTS: Product[] = [
     reference: "Philippians.4:6-7",
     qty: 3,
     image: "/frames/23.png",
-    basePrice: 32000,
+    basePrice: 60000,
   },
   {
     id: 29,
@@ -401,7 +408,7 @@ export const PRODUCTS: Product[] = [
     tags: "children, peace",
     reference: "Daniel.1:17 x Luke.2:40",
     image: "/frames/24.png",
-    basePrice: 32000,
+    basePrice: 40000,
   },
   {
     id: 30,
@@ -411,7 +418,7 @@ export const PRODUCTS: Product[] = [
     reference: "John.14:27",
     qty: 2,
     image: "/frames/41.png",
-    basePrice: 32000,
+    basePrice: 40000,
   },
   {
     id: 31,
@@ -421,7 +428,7 @@ export const PRODUCTS: Product[] = [
     reference: "Proverbs 31:29 x Psalms.139:14",
     qty: 2,
     image: "/frames/25.jpeg",
-    basePrice: 32000,
+    basePrice: 40000,
   },
   {
     id: 32,
@@ -430,7 +437,7 @@ export const PRODUCTS: Product[] = [
     tags: "children, signs, wonders",
     reference: "1 John.4:4 x Isaiah.8:18",
     image: "/frames/26.jpeg",
-    basePrice: 32000,
+    basePrice: 40000,
   },
   {
     id: 33,
@@ -440,7 +447,7 @@ export const PRODUCTS: Product[] = [
     reference: "Psalms.5:12 x Isaiah.40:31",
     qty: 2,
     image: "/frames/27.jpeg",
-    basePrice: 32000,
+    basePrice: 40000,
   },
   {
     id: 34,
@@ -450,7 +457,7 @@ export const PRODUCTS: Product[] = [
     reference: "Psalms.27:1 x Psalms.23:1",
     qty: 2,
     image: "/frames/28.jpeg",
-    basePrice: 32000,
+    basePrice: 40000,
   },
   {
     id: 35,
@@ -460,7 +467,7 @@ export const PRODUCTS: Product[] = [
     reference: "Isaiah.54:17 x Psalms.91:11",
     qty: 2,
     image: "/frames/29.jpeg",
-    basePrice: 32000,
+    basePrice: 40000,
   },
   {
     id: 36,
@@ -470,15 +477,16 @@ export const PRODUCTS: Product[] = [
     reference: "Psalms 23:2-4",
     qty: 4,
     image: "/frames/30.jpeg",
-    basePrice: 70000,
+    basePrice: 80000,
   },
   {
     id: 37,
     name: "Acknowledge Him",
     tags: "In all your ways acknowledge Him",
     reference: "Proverbs 3:6",
+    qty: 2,
     image: "/frames/31.jpeg",
-    basePrice: 28000,
+    basePrice: 40000,
   },
   {
     id: 38,
@@ -488,7 +496,7 @@ export const PRODUCTS: Product[] = [
     reference: "Psalms.66:12 x Genesis.1:1",
     qty: 2,
     image: "/frames/32.png",
-    basePrice: 32000,
+    basePrice: 40000,
   },
   {
     id: 39,
@@ -498,7 +506,7 @@ export const PRODUCTS: Product[] = [
     reference: "Isaiah.54:17 x Psalms.91:11",
     qty: 2,
     image: "/frames/33.jpeg",
-    basePrice: 32000,
+    basePrice: 40000,
   },
   {
     id: 40,
@@ -508,7 +516,7 @@ export const PRODUCTS: Product[] = [
     reference: "Numbers.6:24-26",
     qty: 4,
     image: "/frames/43.png",
-    basePrice: 70000,
+    basePrice: 80000,
   },
   {
     id: 41,
@@ -518,7 +526,7 @@ export const PRODUCTS: Product[] = [
     reference: "Genesis.16:13 x Joshua.24:15",
     qty: 2,
     image: "/frames/35.png",
-    basePrice: 32000,
+    basePrice: 40000,
   },
   {
     id: 42,
@@ -528,7 +536,7 @@ export const PRODUCTS: Product[] = [
     reference: "1 John.5:4",
     qty: 2,
     image: "/frames/18.png",
-    basePrice: 32000,
+    basePrice: 40000,
   },
   {
     id: 43,
@@ -538,7 +546,7 @@ export const PRODUCTS: Product[] = [
     reference: "1 John.5:4",
     qty: 2,
     image: "/frames/19.png",
-    basePrice: 32000,
+    basePrice: 40000,
   },
 ];
 
