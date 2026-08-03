@@ -4,7 +4,11 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/lib/cart-context";
-import { getProduct, formatNaira, SIZES } from "@/lib/products";
+import {
+  getProduct,
+  formatNaira,
+  sizeLabel as getSizeLabel,
+} from "@/lib/products";
 import { CheckCircle2, ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -35,7 +39,7 @@ const PaystackButton = dynamic(
 
 // type FormErrors = Partial<Record<keyof z.infer<typeof checkoutSchema>, string>>;
 
-const FCT = "Federal Capital Territory (Abuja)";
+const FCT = "Abuja";
 const LEAD_KEY = "fwtw_lead_v1";
 
 function deliveryFeeFor(state: string | null, itemsTotal: number) {
@@ -46,6 +50,22 @@ function deliveryFeeFor(state: string | null, itemsTotal: number) {
   if (itemsTotal <= 150000) return 20000;
   if (itemsTotal <= 200000) return 25000;
   return 30000;
+}
+
+// Paystack Nigeria: 1.5% + ₦100 (₦100 waived under ₦2,500), fee capped at ₦2,000.
+// The fee is passed to the customer, so we gross up the amount we must receive.
+const PAYSTACK_RATE = 0.015;
+const PAYSTACK_FLAT = 100;
+const PAYSTACK_FLAT_WAIVER = 2500;
+const PAYSTACK_FEE_CAP = 2000;
+
+function paystackFee(amountToReceive: number): number {
+  if (amountToReceive <= 0) return 0;
+  const flat = amountToReceive >= PAYSTACK_FLAT_WAIVER ? PAYSTACK_FLAT : 0;
+  // charge = (amount + flat) / (1 - rate)  →  fee = charge - amount
+  const grossed = (amountToReceive + flat) / (1 - PAYSTACK_RATE);
+  const fee = Math.ceil(grossed - amountToReceive);
+  return Math.min(fee, PAYSTACK_FEE_CAP);
 }
 
 export default function Home() {
@@ -65,7 +85,9 @@ export default function Home() {
   const { state: deliveryState, setState: setDeliveryState } = useDelivery();
 
   const deliveryFee = deliveryFeeFor(deliveryState, subtotal);
-  const total = subtotal + deliveryFee;
+  const orderAmount = subtotal + deliveryFee;
+  const gatewayFee = paystackFee(orderAmount);
+  const total = orderAmount + gatewayFee;
 
   const router = useRouter();
   const [formData, setFormData] = useState({
@@ -77,6 +99,8 @@ export default function Home() {
     state: deliveryState ?? "",
     notes: "",
   });
+
+  console.log("nale---->", deliveryState);
 
   useEffect(() => {
     try {
@@ -143,8 +167,12 @@ export default function Home() {
             .map((item) => {
               const product = getProduct(item.productId);
               if (!product) return null;
-              const sizeMeta = SIZES.find((s) => s.id === item.sizeId);
-              const sizeLabel = sizeMeta?.label;
+              const sizeLabel = getSizeLabel(
+                item.sizeId,
+                item.customWidth,
+                item.customHeight,
+              );
+              // const sizeLabel = sizeMeta?.label;
               return `${product.name} (${sizeLabel}) × ${item.quantity}`;
             })
             .filter(Boolean)
@@ -321,7 +349,10 @@ export default function Home() {
                 /> */}
 
                 <div>
-                  <label htmlFor="state" className="block font-sans text-xs uppercase tracking-widest text-muted-foreground mb-2">
+                  <label
+                    htmlFor="state"
+                    className="block font-sans text-xs uppercase tracking-widest text-muted-foreground mb-2"
+                  >
                     State<span className="text-gold"> *</span>
                   </label>
                   <select
@@ -334,7 +365,9 @@ export default function Home() {
                   >
                     <option value="">Select your state</option>
                     {NIGERIAN_STATES.map((s) => (
-                      <option key={s} value={s}>{s}</option>
+                      <option key={s} value={s}>
+                        {s}
+                      </option>
                     ))}
                   </select>
                   {/* {errors.state && <p className="mt-1 font-sans text-xs text-destructive">{errors.state}</p>} */}
@@ -357,13 +390,15 @@ export default function Home() {
               </div>
             </fieldset>
 
-            {deliveryState === FCT && <p className="font-sans text-xs text-muted-foreground">
-              {/* By placing your order you agree to be contacted by our team to
+            {deliveryState === FCT && (
+              <p className="font-sans text-xs text-muted-foreground">
+                {/* By placing your order you agree to be contacted by our team to
               finalize delivery. */}
-              Delivery logistics will be finalized via Whatsapp. You can either
-              Pickup at our pickup location in Area 1 or we can deliver to you
-              via a Dispatch rider (delivery fees apply)
-            </p>}
+                Delivery logistics will be finalized via Whatsapp. You can
+                either Pickup at our pickup location in Area 1 or we can deliver
+                to you via a Dispatch rider (delivery fees apply)
+              </p>
+            )}
           </form>
 
           <PaystackButton
@@ -389,12 +424,16 @@ export default function Home() {
               {items.map((item) => {
                 const product = getProduct(item.productId);
                 if (!product) return null;
-                const sizeMeta = SIZES.find((s) => s.id === item.sizeId);
+                // const sizeMeta = SIZES.find((s) => s.id === item.sizeId);
                 // const sizeLabel =
                 //   item.sizeId === "custom"
                 //     ? `Custom ${item.customWidth}" × ${item.customHeight}"`
                 //     : sizeMeta?.label;
-                const sizeLabel = sizeMeta?.label;
+                const sizeLabel = getSizeLabel(
+                  item.sizeId,
+                  item.customWidth,
+                  item.customHeight,
+                );
                 return (
                   <li key={item.id} className="flex gap-3 py-3">
                     <Image
@@ -441,18 +480,25 @@ export default function Home() {
                 <Row label="Discount" value={`−${formatNaira(savings)}`} />
               )}
               {/* <Row label="Shipping" value="Calculated after order" muted /> */}
+              {deliveryState !== "Abuja" && (
+                <Row
+                  label={
+                    deliveryState ? `Delivery (${deliveryState})` : "Delivery"
+                  }
+                  value={
+                    !deliveryState
+                      ? "Select a state"
+                      : deliveryFee === 0
+                        ? "Free — Abuja (FCT)"
+                        : formatNaira(deliveryFee)
+                  }
+                  muted={!deliveryState}
+                />
+              )}
+
               <Row
-                label={
-                  deliveryState ? `Delivery (${deliveryState})` : "Delivery"
-                }
-                value={
-                  !deliveryState
-                    ? "Select a state"
-                    : deliveryFee === 0
-                      ? "Free — Abuja (FCT)"
-                      : formatNaira(deliveryFee)
-                }
-                muted={!deliveryState}
+                label="Payment gateway fee (Paystack)"
+                value={formatNaira(gatewayFee)}
               />
               <div className="flex items-center justify-between pt-2">
                 <span className="font-sans text-xs uppercase tracking-widest text-muted-foreground">
@@ -462,6 +508,9 @@ export default function Home() {
                   {formatNaira(total)}
                 </span>
               </div>
+              {/* <p className="font-sans text-[11px] leading-relaxed text-muted-foreground">
+                Paystack charges 1.5% + ₦100 per transaction (₦100 waived below ₦2,500, fee capped at ₦2,000).
+              </p> */}
             </div>
           </aside>
         </div>

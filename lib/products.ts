@@ -1,3 +1,4 @@
+export type FrameShape = "portrait" | "square";
 export interface Product {
   id: number;
   key?: string;
@@ -9,6 +10,8 @@ export interface Product {
   video?: string;
   extraNotes?: string;
   basePrice: number; // NGN, price for 12x16
+    /** "square" frames are only produced in the fixed square sizes below */
+  shape?: FrameShape;
 }
 
 // Pricing model (placeholders, NGN):
@@ -22,7 +25,41 @@ export const SIZES = [
   // { id: "custom", label: "Custom Size", width: 0, height: 0, multiplier: 0 },
 ] as const;
 
-export type SizeId = (typeof SIZES)[number]["id"];
+// export type SizeId = (typeof SIZES)[number]["id"];
+
+/** Square frames are produced only in these sizes, at fixed prices. */
+export const SQUARE_SIZES = [
+  { id: "6x6", label: '6" × 6"', width: 6, height: 6, price: 70000 },
+  { id: "8x8", label: '8" × 8"', width: 8, height: 8, price: 85000 },
+  { id: "10x10", label: '10" × 10"', width: 10, height: 10, price: 100000 },
+  { id: "12x12", label: '12" × 12"', width: 12, height: 12, price: 125000 },
+] as const;
+
+export type RectSizeId = (typeof SIZES)[number]["id"];
+export type SquareSizeId = (typeof SQUARE_SIZES)[number]["id"];
+export type SizeId = RectSizeId | SquareSizeId;
+
+export const ALL_SIZES: { id: SizeId; label: string }[] = [...SIZES, ...SQUARE_SIZES];
+
+export function isSquareSize(sizeId: SizeId): sizeId is SquareSizeId {
+  return SQUARE_SIZES.some((s) => s.id === sizeId);
+}
+
+export function isSquareProduct(product: Product): boolean {
+  return product.shape === "square";
+}
+
+/** Size options offered for a given product. */
+export function sizesForProduct(product: Product): { id: SizeId; label: string }[] {
+  return isSquareProduct(product)
+    ? SQUARE_SIZES.map((s) => ({ id: s.id as SizeId, label: s.label }))
+    : SIZES.map((s) => ({ id: s.id as SizeId, label: s.label }));
+}
+
+export function sizeLabel(sizeId: SizeId, customWidth?: number, customHeight?: number): string {
+  // if (sizeId === "custom") return `Custom ${customWidth}" × ${customHeight}"`;
+  return ALL_SIZES.find((s) => s.id === sizeId)?.label ?? sizeId;
+}
 
 export const bestsellers: Product[] = [ 
 {
@@ -203,9 +240,9 @@ export const PRODUCTS: Product[] = [
     key: "fruit-9-frame-1",
     name: "Fruit-of-the-Spirit 9-frame set (1)",
     tags: "peace, love, joy, patience, kindness, goodness, faithfulness, gentleness, self-control",
-    reference: "Isaiah 43:1",
+    reference: "Galations:5:22-23",
     image: "/frames/66.png",
-    basePrice: 130000,
+    basePrice: 70000,
   },
   {
     id: 9,
@@ -290,78 +327,82 @@ export const PRODUCTS: Product[] = [
 
   {
     id: 17,
-    name: "Acknowledge Him",
-    tags: "In all your ways acknowledge Him",
+    key: "city-on-a-hill-1-frame",
+    name: "City On A Hill Single Frame",
+    tags: "This is just a single frame, please let us know the color you'll like to go with in the extra notes field when you checkout",
     reference: "Proverbs 3:6",
-    qty: 2,
+    qty: 1,
     image: "/frames/60.png",
-    basePrice: 40000,
+    basePrice: 20000,
   },
 
   {
     id: 18,
-    name: "Acknowledge Him",
-    tags: "In all your ways acknowledge Him",
-    reference: "Proverbs 3:6",
+    key: "fruit-9-frame-2",
+    name: "Fruit-of-the-Spirit 9-frame set (2)",
+    tags: "peace, love, joy, patience, kindness, goodness, faithfulness, gentleness, self-control",
+    reference: "Galatians:5:22-23",
+    basePrice: 70000,
+    shape: "square",
     qty: 9,
     image: "/frames/61.png",
-    basePrice: 60000,
   },
 
   {
     id: 19,
-    name: "Acknowledge Him",
-    tags: "In all your ways acknowledge Him",
-    reference: "Proverbs 3:6",
+    key: "fruit-9-frame-3",
+    name: "Fruit-of-the-Spirit 9-frame set (3)",
+    tags: "peace, love, joy, patience, kindness, goodness, faithfulness, gentleness, self-control",
+    reference: "Galatians:5:22-23",
+    basePrice: 70000,
+    shape: "square",
     qty: 9,
     image: "/frames/62.png",
-    basePrice: 60000,
   },
-
   {
     id: 20,
-    name: "Acknowledge Him",
-    tags: "In all your ways acknowledge Him",
-    reference: "Proverbs 3:6",
+    key: "fruit-9-frame-4",
+    name: "Fruit-of-the-Spirit 9-frame set (4)",
+    tags: "peace, love, joy, patience, kindness, goodness, faithfulness, gentleness, self-control",
+    reference: "Galations:5:22-23",
+    basePrice: 70000,
+    shape: "square",
     qty: 9,
     image: "/frames/63.png",
-    basePrice: 60000,
   },
 
   {
     id: 21,
-    name: "Acknowledge Him",
-    tags: "In all your ways acknowledge Him",
-    reference: "Proverbs 3:6",
-     qty: 9,
+    key: "fruit-9-frame-5",
+    name: "Fruit-of-the-Spirit 9-frame set (5)",
+    tags: "peace, love, joy, patience, kindness, goodness, faithfulness, gentleness, self-control",
+    reference: "Galations:5:22-23",
+    basePrice: 70000,
+    shape: "square",
+    qty: 9,
     image: "/frames/64.png",
-    basePrice: 60000,
   },
   {
     id: 22,
-    name: "Acknowledge Him",
-    tags: "In all your ways acknowledge Him",
-    reference: "Proverbs 3:6",
+    key: "fruit-9-frame-5",
+    name: "Fruit-of-the-Spirit 9-frame set (5)",
+    tags: "peace, love, joy, patience, kindness, goodness, faithfulness, gentleness, self-control",
+    reference: "Galations:5:22-23",
+    basePrice: 70000,
+    shape: "square",
     qty: 9,
     image: "/frames/65.png",
-    basePrice: 60000,
   },
   {
     id: 23,
-    name: "Acknowledge Him",
-    tags: "In all your ways acknowledge Him",
-    reference: "Proverbs 3:6",
+    key: "fruit-9-frame-6",
+    name: "Fruit-of-the-Spirit 9-frame set (6)",
+    tags: "peace, love, joy, patience, kindness, goodness, faithfulness, gentleness, self-control",
+    reference: "Galations:5:22-23",
+    basePrice: 70000,
+    shape: "square",
     qty: 9,
     image: "/frames/66.png",
-    basePrice: 60000,
-  },
-  {
-    id: 24,
-    name: "Acknowledge Him",
-    tags: "In all your ways acknowledge Him",
-    reference: "Proverbs 3:6",
-    image: "/frames/66.png",
-    basePrice: 28000,
   },
   {
     id: 25,
@@ -548,9 +589,19 @@ export const PRODUCTS: Product[] = [
     image: "/frames/19.png",
     basePrice: 40000,
   },
+    {
+    id: 44,
+    key: "josh-24-15-frame",
+    name: "JOSH.24:15 Single Frame",
+    tags: "This is just a single frame, please let us know the color you'll like to go with in the extra notes field when you checkout",
+    reference: "Joshua.24:15",
+    qty: 1,
+    image: "/frames/67.png",
+    basePrice: 20000,
+  },
 ];
 
-const BASE_AREA = 12 * 16;
+// const BASE_AREA = 12 * 16;
 
 export function calculatePrice(
   basePrice: number,
@@ -564,6 +615,8 @@ export function calculatePrice(
   //   // Custom carries a 15% craftsmanship premium
   //   return Math.round(ratePerSqIn * customWidth * customHeight * 1.15);
   // }
+  const square = SQUARE_SIZES.find((s) => s.id === sizeId);
+  if (square) return square.price;
   const size = SIZES.find((s) => s.id === sizeId);
   if (!size) return basePrice;
   return Math.round(basePrice * size.multiplier);

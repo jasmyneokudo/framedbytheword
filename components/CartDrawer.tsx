@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
 import { useCart } from "@/lib/cart-context";
-import { getProduct, formatNaira, SIZES } from "@/lib/products";
+import { getProduct, formatNaira, sizeLabel as getSizeLabel } from "@/lib/products";
 
 export function CartDrawer() {
   const { items, isOpen, closeCart, updateQty, removeItem, savings, subtotal, totalCount } = useCart();
@@ -33,13 +33,12 @@ export function CartDrawer() {
                 {items.map((item) => {
                   const product = getProduct(item.productId);
                   if (!product) return null;
-                  const sizeMeta = SIZES.find((s) => s.id === item.sizeId);
+                  const sizeLabel = getSizeLabel(item.sizeId, item.customWidth, item.customHeight);
                   // const sizeLabel =
                   //   item.sizeId === "custom"
                   //     ? `Custom ${item.customWidth}" × ${item.customHeight}"`
                   //     : sizeMeta?.label;
 
-                  const sizeLabel = sizeMeta?.label;
                   return (
                     <li key={item.id} className="flex gap-3 py-4">
                       <img

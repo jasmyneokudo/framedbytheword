@@ -12,6 +12,8 @@ import {
   calculatePrice,
   formatNaira,
   getProduct,
+  SQUARE_SIZES,
+  isSquareProduct,
   // getProduct,
   type SizeId,
 } from "@/lib/products";
@@ -103,17 +105,32 @@ function useCountdown(target: number) {
   return { d, h, m, s, done: diff === 0, diff };
 }
 
-const SIZE_MAP: { key: "small" | "medium" | "big" | "large"; sizeId: SizeId; label: string; dims: string }[] = [
-  { key: "small", sizeId: "8x12", label: "Small", dims: '8" × 12"' },
-  { key: "medium", sizeId: "12x16", label: "Medium", dims: '12" × 16"' },
-  { key: "big", sizeId: "16x24", label: "Big", dims: '16" × 24"' },
-  { key: "large", sizeId: "24x36", label: "Large", dims: '24" × 36"' },
+// const SIZE_MAP: { key: "small" | "medium" | "big" | "large"; sizeId: SizeId; label: string; dims: string }[] = [
+//   { key: "small", sizeId: "8x12", label: "Small", dims: '8" × 12"' },
+//   { key: "medium", sizeId: "12x16", label: "Medium", dims: '12" × 16"' },
+//   { key: "big", sizeId: "16x24", label: "Big", dims: '16" × 24"' },
+//   { key: "large", sizeId: "24x36", label: "Large", dims: '24" × 36"' },
+// ];
+
+interface SizeOption { sizeId: SizeId; label: string; dims: string }
+
+const SIZE_MAP: SizeOption[] = [
+  { sizeId: "8x12", label: "Small", dims: '8" × 12"' },
+  { sizeId: "12x16", label: "Medium", dims: '12" × 16"' },
+  { sizeId: "16x24", label: "Big", dims: '16" × 24"' },
+  { sizeId: "24x36", label: "Large", dims: '24" × 36"' },
 ];
+
+const SQUARE_SIZE_MAP: SizeOption[] = SQUARE_SIZES.map((s) => ({
+  sizeId: s.id as SizeId,
+  label: s.label,
+  dims: "Square",
+}));
 
 export default function Home({ params }: { params: Promise<{ id: string}>}) {
   const { id } = use(params);
   const product = getProduct(id);
-  // console.log('prodict id: ', product, id);
+  console.log('prodict id]: ', product, id);
   
   const router = useRouter();
 //   const navigate = useNavigate();
@@ -125,8 +142,10 @@ export default function Home({ params }: { params: Promise<{ id: string}>}) {
   const tiers = tiersFor(productClaimed);
   const active = activeTier(tiers);
 
-  const [sizeKey, setSizeKey] = useState<"small" | "medium" | "big" | "large">("medium");
-  const selectedSize = SIZE_MAP.find((s) => s.key === sizeKey)!;
+  const isSquare = isSquareProduct(product ?? { id: 0, name: "", key: "", reference: "", image: "", basePrice: 0, tags: "" });
+  const sizeOptions = isSquare ? SQUARE_SIZE_MAP : SIZE_MAP;
+  const [sizeId, setSizeId] = useState<SizeId>(isSquare ? "8x8" : "16x24");
+  const selectedSize = sizeOptions.find((s) => s.sizeId === sizeId) ?? sizeOptions[0];
   const regularPrice = calculatePrice(product?.basePrice ?? 0, selectedSize.sizeId);
   const yourPrice = Math.round(regularPrice * (1 - active.discount));
   const saving = regularPrice - yourPrice;
@@ -257,19 +276,19 @@ export default function Home({ params }: { params: Promise<{ id: string}>}) {
             {/* Size */}
             <div className="mt-8">
               <p className="font-sans text-[11px] uppercase tracking-widest text-muted-foreground">Select size</p>
-              <div className="mt-3 grid grid-cols-4 gap-2">
-                {SIZE_MAP.map((s) => (
+              <div className={`mt-3 grid gap-2 ${isSquare ? "grid-cols-2 sm:grid-cols-4" : "grid-cols-3"}`}>
+                {sizeOptions.map((s) => (
                   <button
-                    key={s.key}
-                    onClick={() => setSizeKey(s.key)}
+                    key={s.sizeId}
+                    onClick={() => setSizeId(s.sizeId)}
                     className={`rounded border px-3 py-3 text-left transition-colors ${
-                      sizeKey === s.key
+                      sizeId === s.sizeId
                         ? "border-primary bg-primary text-primary-foreground"
                         : "border-border bg-background hover:border-gold"
                     }`}
                   >
                     <p className="font-serif text-base">{s.label}</p>
-                    <p className={`mt-0.5 font-sans text-[11px] ${sizeKey === s.key ? "text-primary-foreground/80" : "text-muted-foreground"}`}>
+                    <p className={`mt-0.5 font-sans text-[11px] ${sizeId === s.sizeId ? "text-primary-foreground/80" : "text-muted-foreground"}`}>
                       {s.dims}
                     </p>
                   </button>
@@ -503,10 +522,10 @@ export default function Home({ params }: { params: Promise<{ id: string}>}) {
             {PRODUCTS.filter((p) => p.id !== product?.id).slice(0, 4).map((p) => (
               <Link
                 key={p.id}
-                href={`/product/${p.id}`}
+                href={`/product/${p.key}`}
                 className="group block overflow-hidden rounded-lg border border-border bg-card transition-shadow hover:shadow-lg"
               >
-                <div className="aspect-[4/5] overflow-hidden bg-muted">
+                <div className="aspect-4/5 overflow-hidden bg-muted">
                   <img src={p.image} alt={p.name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 </div>
                 <div className="p-4">

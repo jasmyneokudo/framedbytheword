@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import type { Product, SizeId } from "@/lib/products";
-import { SIZES, calculatePrice, formatNaira } from "@/lib/products";
+// import { SIZES, calculatePrice, formatNaira } from "@/lib/products";
+import { calculatePrice, formatNaira, sizesForProduct, isSquareProduct } from "@/lib/products";
+
 import { useCart } from "@/lib/cart-context";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
@@ -15,7 +17,9 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const { addItem } = useCart();
-  const [size, setSize] = useState<SizeId>("12x16");
+  const isSquare = isSquareProduct(product);
+  const sizeOptions = sizesForProduct(product);
+  const [size, setSize] = useState<SizeId>(isSquare ? "8x8" : "12x16");
   // const [customW, setCustomW] = useState<string>("");
   // const [customH, setCustomH] = useState<string>("");
 
@@ -29,11 +33,9 @@ export function ProductCard({ product }: ProductCardProps) {
     // Number.isFinite(cw) ? cw : undefined,
     // Number.isFinite(ch) ? ch : undefined,
   );
-
-  console.log('product id', product.id);
   
   const handleAdd = () => {
-    alert("he")
+    alert( product.key)
     console.log('product id', product.id, size);
     // if (!customValid) return;
     addItem({
@@ -48,7 +50,7 @@ export function ProductCard({ product }: ProductCardProps) {
   return (
     <article className="group flex flex-col overflow-hidden rounded-lg border border-border bg-card transition-all duration-500 hover:shadow-xl">
       <Link href={`/product/${product.key}`} className="block">
-      <div className="relative aspect-[4/5] overflow-hidden bg-muted">
+      <div className={`relative overflow-hidden bg-muted ${isSquare ? "aspect-square" : "aspect-4/5"}`}>
         <Image
           src={product.image}
           alt={`${product.name} — scripture frame`}
@@ -73,7 +75,7 @@ export function ProductCard({ product }: ProductCardProps) {
             Choose Size
           </label>
           <div className="grid grid-cols-2 gap-2">
-            {SIZES.map((s) => (
+            {sizeOptions.map((s) => (
               <button
                 key={s.id}
                 type="button"
