@@ -33,7 +33,7 @@ export const bestsellers: Product[] = [
     reference: "1 John.5:4",
     qty: 2,
     image: "/frames/18.png",
-    basePrice: 32000,
+    basePrice: 40000,
   },
   {
     id: 1,
@@ -43,7 +43,7 @@ export const bestsellers: Product[] = [
     reference: "Genesis.16:13 x Luke.1:37",
     qty: 2,
     image: "/frames/3.png",
-    basePrice: 32000,
+    basePrice: 40000,
   },
   {
     id: 2,
@@ -63,7 +63,7 @@ export const bestsellers: Product[] = [
     reference: "Proverbs.31:25 x Psalm 46:5",
     qty: 2,
     image: "/frames/10.png",
-    basePrice: 32000,
+    basePrice: 40000,
   },
   {
     id: 4,
@@ -73,7 +73,7 @@ export const bestsellers: Product[] = [
     reference: "Romans.9:16 x Proverbs.4:18",
     qty: 2,
     image: "/frames/1.png",
-    basePrice: 32000,
+    basePrice: 40000,
   },
   {
     id: 5,
@@ -83,7 +83,7 @@ export const bestsellers: Product[] = [
     reference: "2 Kings.3:17 x Matthew.6:26-30",
     qty: 2,
     image: "/frames/20.png",
-    basePrice: 32000,
+    basePrice: 40000,
   },
    {
     id: 6,
