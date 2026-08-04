@@ -175,6 +175,16 @@ export const PRODUCTS: Product[] = [
     image: "/frames/1.png",
     basePrice: 40000,
   },
+    {
+    id: 0,
+    key: "not-for-sale",
+    name: "not for sale",
+    tags: "faith, overcoming, born of God",
+    reference: "1 John.5:4",
+    qty: 2,
+    image: "/frames/18.png",
+    basePrice: 100,
+  },
   {
     id: 1,
     key: "power-of-god-2-frame",
