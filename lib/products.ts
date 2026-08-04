@@ -183,7 +183,17 @@ export const PRODUCTS: Product[] = [
     reference: "1 John.5:4",
     qty: 2,
     image: "/frames/18.png",
-    basePrice: 100,
+    basePrice: 50,
+  },
+   {
+    id: 0,
+    key: "not-for-sale-2",
+    name: "not for sale 2",
+    tags: "faith, overcoming, born of God",
+    reference: "1 John.5:4",
+    qty: 2,
+    image: "/frames/18.png",
+    basePrice: 50,
   },
   {
     id: 1,
