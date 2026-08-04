@@ -58,7 +58,11 @@ export default function Home() {
             inspiration to every room of your home.
           </p>
           <div className="animate-fade-up-delay-2 mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Button asChild size="lg" className="bg-gold text-gold-foreground hover:bg-gold/90">
+            <Button
+              asChild
+              size="lg"
+              className="bg-gold text-gold-foreground hover:bg-gold/90"
+            >
               <a href="#shop">Shop the Collection</a>
             </Button>
             {/* <Button asChild size="lg" variant="outline" className="border-primary-foreground/30 bg-transparent text-primary-foreground hover:bg-primary-foreground/10">
@@ -72,20 +76,33 @@ export default function Home() {
       <section className="border-b border-border bg-cream/40 py-12">
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 px-6 md:grid-cols-3">
           {[
-            { title: "Crafted with Intention", body: "Clean, high quality design, perfectly framed for your interior." },
-            { title: "Perfectly Sized", body: "Three considered sizes, plus custom dimensions tailored to your wall." },
-            { title: "Delivered with Care", body: "Each frame is packaged and dispatched nationwide with white-glove attention." },
+            {
+              title: "Crafted with Intention",
+              body: "Clean, high quality design, perfectly framed for your interior.",
+            },
+            {
+              title: "Perfectly Sized",
+              body: "Three considered sizes, plus custom dimensions tailored to your wall.",
+            },
+            {
+              title: "Delivered with Care",
+              body: "Each frame is carefully packaged and dispatched nationwide via GIG Logistics",
+            },
           ].map((f) => (
             <div key={f.title} className="text-center">
               <div className="mx-auto h-px w-10 bg-gold/60" />
-              <h3 className="mt-4 font-serif text-lg text-foreground">{f.title}</h3>
-              <p className="mt-2 font-sans text-sm font-light leading-relaxed text-muted-foreground">{f.body}</p>
+              <h3 className="mt-4 font-serif text-lg text-foreground">
+                {f.title}
+              </h3>
+              <p className="mt-2 font-sans text-sm font-light leading-relaxed text-muted-foreground">
+                {f.body}
+              </p>
             </div>
           ))}
         </div>
       </section>
 
-       {/* Bestsellers */}
+      {/* Bestsellers */}
       <section className="border-b border-border bg-cream/40 py-16 md:py-20">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-10 flex items-end justify-between gap-6">
@@ -97,7 +114,10 @@ export default function Home() {
                 Bestsellers
               </h2>
             </div>
-            <a href="#collections" className="hidden md:inline font-sans text-xs uppercase tracking-widest text-muted-foreground hover:text-foreground">
+            <a
+              href="#collections"
+              className="hidden md:inline font-sans text-xs uppercase tracking-widest text-muted-foreground hover:text-foreground"
+            >
               Explore All →
             </a>
           </div>
@@ -113,12 +133,15 @@ export default function Home() {
       <section id="shop" className="py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mx-auto mb-14 max-w-2xl text-center">
-            <p className="font-sans text-xs uppercase tracking-[0.3em] text-gold">The Collection</p>
+            <p className="font-sans text-xs uppercase tracking-[0.3em] text-gold">
+              The Collection
+            </p>
             <h2 className="mt-3 font-serif text-3xl font-medium text-foreground md:text-4xl">
               Scripture Frames, Curated for Every Space
             </h2>
             <p className="mt-4 font-sans text-base font-light leading-relaxed text-muted-foreground">
-              Select your verse, choose a size, and we&apos;ll craft it for you. Custom dimensions available on every piece.
+              Select your verse, choose a size, and we&apos;ll craft it for you.
+              Custom dimensions available on every piece.
             </p>
           </div>
 
@@ -134,25 +157,47 @@ export default function Home() {
       <section className="border-t border-border bg-cream/30 py-16">
         <div className="mx-auto max-w-5xl px-6">
           <div className="text-center">
-            <p className="font-sans text-xs uppercase tracking-[0.3em] text-gold">Size Guide</p>
+            <p className="font-sans text-xs uppercase tracking-[0.3em] text-gold">
+              Size Guide
+            </p>
             <h2 className="mt-3 font-serif text-3xl font-medium text-foreground">
               Find the Right Fit
             </h2>
           </div>
           <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
             {[
-              { label: '12" × 16"', desc: "Intimate accent. Perfect for nightstands, shelves, and small nooks." },
-              { label: '16" × 24"', desc: "Refined statement. Ideal above consoles, desks, and reading chairs." },
-              { label: '24" × 36"', desc: "Centerpiece presence. Designed to anchor a sofa or bedhead." },
+              {
+                label: '8" × 12"',
+                desc: "A4 size. Perfect for nightstands, shelves, and small nooks as well as gifts.",
+              },
+
+              {
+                label: '12" × 16"',
+                desc: "Intimate accent. Perfect for shelves, gallery style wall-arrangement etc.",
+              },
+              {
+                label: '16" × 24"',
+                desc: "Refined statement. Ideal above consoles, desks, and reading chairs.",
+              },
+              {
+                label: '24" × 36"',
+                desc: "Centerpiece presence. Designed to anchor a sofa or bedhead.",
+              },
             ].map((s) => (
-              <div key={s.label} className="rounded-lg border border-border bg-background p-6 text-center">
+              <div
+                key={s.label}
+                className="rounded-lg border border-border bg-background p-6 text-center"
+              >
                 <p className="font-serif text-2xl text-foreground">{s.label}</p>
-                <p className="mt-3 font-sans text-sm font-light leading-relaxed text-muted-foreground">{s.desc}</p>
+                <p className="mt-3 font-sans text-sm font-light leading-relaxed text-muted-foreground">
+                  {s.desc}
+                </p>
               </div>
             ))}
           </div>
           <p className="mt-8 text-center font-sans text-sm italic text-muted-foreground">
-            Need something different? Choose <span className="text-foreground">Custom Size</span> on any frame.
+            Need something different? Call or Whatsapp{" "}
+            <span className="text-foreground">0906-866-1808</span>.
           </p>
         </div>
       </section>

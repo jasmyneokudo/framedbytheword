@@ -210,7 +210,7 @@ export default function Home() {
             Your order{" "}
             <span className="text-foreground">{submitted.orderId}</span> has
             been received. Our team will reach out shortly to confirm your
-            delivery details and arrange payment.
+            order details and delivery address.
           </p>
           <Button
             asChild
