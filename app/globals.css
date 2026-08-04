@@ -103,13 +103,14 @@
   --font-sans: 'Inter', system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #26283A;
     --gold: #D3B684;
+    --muted-foreground: #fff;
   }
-}
+} */
 
 body {
   background: var(--background);
