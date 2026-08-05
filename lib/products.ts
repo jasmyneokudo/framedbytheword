@@ -18,10 +18,11 @@ export interface Product {
 // 12x16 = base, 16x24 = base * 1.6, 24x36 = base * 2.6
 // custom: rate per square inch derived from base / (12*16)
 export const SIZES = [
-  { id: "8x12", label: '8" × 12"', width: 8, height: 12, multiplier: 0.8 },
+  { id: "8x12", label: '8" × 12"', width: 8, height: 12, multiplier: 0.7 },
   { id: "12x16", label: '12" × 16"', width: 12, height: 16, multiplier: 1 },
   { id: "16x24", label: '16" × 24"', width: 16, height: 24, multiplier: 1.6 },
   { id: "24x36", label: '24" × 36"', width: 24, height: 36, multiplier: 2.6 },
+  { id: "36x48", label: '36" × 48"', width: 36, height: 48, multiplier: 5.2 },
   // { id: "custom", label: "Custom Size", width: 0, height: 0, multiplier: 0 },
 ] as const;
 

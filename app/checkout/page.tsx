@@ -100,8 +100,6 @@ export default function Home() {
     notes: "",
   });
 
-  console.log("nale---->", deliveryState);
-
   useEffect(() => {
     try {
       const raw = localStorage.getItem(LEAD_KEY);
@@ -384,6 +382,8 @@ export default function Home() {
                   id="notes"
                   name="notes"
                   rows={3}
+                  value={formData.notes}
+                  onChange={handleInputChange}
                   maxLength={500}
                   className="w-full rounded border border-border bg-background px-3 py-2.5 font-sans text-sm text-foreground focus:border-gold focus:outline-none"
                 />

@@ -82,7 +82,7 @@ export default function Home() {
             },
             {
               title: "Perfectly Sized",
-              body: "Three considered sizes, plus custom dimensions tailored to your wall.",
+              body: "Five considered sizes, for any size of space and budget.",
             },
             {
               title: "Delivered with Care",
@@ -182,6 +182,10 @@ export default function Home() {
               {
                 label: '24" × 36"',
                 desc: "Centerpiece presence. Designed to anchor a sofa or bedhead.",
+              },
+              {
+                label: '36" × 48"',
+                desc: "Main Character Aura, designed for very large spaces.",
               },
             ].map((s) => (
               <div

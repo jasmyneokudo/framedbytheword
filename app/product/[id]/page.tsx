@@ -20,6 +20,7 @@ import {
 import { Check, Clock, Lock, ShieldCheck, Sparkles, TrendingDown, Users, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+// import Image from "next/image";
 
 
 // function NotFoundProduct() {
@@ -115,10 +116,11 @@ function useCountdown(target: number) {
 interface SizeOption { sizeId: SizeId; label: string; dims: string }
 
 const SIZE_MAP: SizeOption[] = [
-  { sizeId: "8x12", label: "Small", dims: '8" × 12"' },
+  { sizeId: "8x12", label: "Small (A4)", dims: '8" × 12"' },
   { sizeId: "12x16", label: "Medium", dims: '12" × 16"' },
   { sizeId: "16x24", label: "Big", dims: '16" × 24"' },
   { sizeId: "24x36", label: "Large", dims: '24" × 36"' },
+  { sizeId: "36x48", label: "Extra-large", dims: '36" × 48"' },
 ];
 
 const SQUARE_SIZE_MAP: SizeOption[] = SQUARE_SIZES.map((s) => ({
@@ -237,6 +239,9 @@ export default function Home({ params }: { params: Promise<{ id: string}>}) {
               <img
                 src={product?.image ?? ""}
                 alt={product?.name ?? ""}
+                // width="0"
+                //       height="0"
+                //       sizes="100vw"
                 className="h-full w-full object-cover"
               />
               <div className="absolute left-4 top-4 rounded-full bg-background/90 px-3 py-1.5 font-sans text-[10px] uppercase tracking-[0.25em] text-foreground backdrop-blur">
@@ -262,7 +267,8 @@ export default function Home({ params }: { params: Promise<{ id: string}>}) {
               {product?.name}
             </h1>
             <p className="mt-3 font-sans text-base italic font-light text-muted-foreground">
-              &quot;{product?.tags}&quot;
+              {/* &quot;{product?.tags}&quot; */}
+              Frame materials: High quality frames made of wood and fibre and acrylic glass
             </p>
 
             <div className="mt-6 rounded-lg border border-gold/40 bg-gold/5 p-5">
