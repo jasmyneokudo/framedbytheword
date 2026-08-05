@@ -29,7 +29,7 @@ export function SiteHeader({ variant = "transparent" }: SiteHeaderProps) {
 
   return (
     <header className={wrapperBase}>
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
         <Link
           href="/"
           className={`font-serif text-sm font-medium tracking-[0.2em] hover:text-gold transition-colors ${brandColor}`}
