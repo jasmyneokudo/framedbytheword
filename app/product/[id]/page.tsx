@@ -463,7 +463,18 @@ export default function Home({ params }: { params: Promise<{ id: string }> }) {
 
             <Button
               size="lg"
-              onClick={() => setShowReserve(true)}
+              onClick={() => {
+                if (form.name !== "") {
+                  addItem({
+                    productId: product?.key ?? "",
+                    sizeId: selectedSize.sizeId,
+                    quantity: 1,
+                    discount: active.discount,
+                  });
+                } else {
+                  setShowReserve(true);
+                }
+              }}
               className="mt-6 w-full bg-primary text-primary-foreground hover:bg-primary/90"
             >
               <Lock className="mr-2 h-4 w-4" />
@@ -827,9 +838,9 @@ export default function Home({ params }: { params: Promise<{ id: string }> }) {
               Lock your production slot
             </h3>
             <p className="mt-2 font-sans text-sm text-muted-foreground">
-              We&apos;ll hold your {(active.discount * 100).toFixed(0)}% discount and{" "}
-              {selectedSize.label} slot for 15 minutes while you complete
-              checkout.
+              We&apos;ll hold your {(active.discount * 100).toFixed(0)}%
+              discount and {selectedSize.label} slot for 15 minutes while you
+              complete checkout.
             </p>
             <form onSubmit={submitReserve} className="mt-6 space-y-4">
               {[
@@ -876,10 +887,10 @@ export default function Home({ params }: { params: Promise<{ id: string }> }) {
               >
                 {isReserving ? "Reserving..." : "Reserve My Early-Buyer Price"}
               </Button>
-              <p className="text-center font-sans text-[11px] text-muted-foreground">
+              {/* <p className="text-center font-sans text-[11px] text-muted-foreground">
                 Abuja delivery is payable on delivery. Outside Abuja shipping is
                 added at checkout.
-              </p>
+              </p> */}
             </form>
           </div>
         </div>

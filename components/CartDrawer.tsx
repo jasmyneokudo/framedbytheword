@@ -115,7 +115,7 @@ export function CartDrawer() {
                 <span className="font-sans text-xs uppercase tracking-widest text-muted-foreground">Subtotal</span>
                 <span className="font-serif text-xl text-foreground">{formatNaira(subtotal)}</span>
               </div>
-              <p className="font-sans text-xs text-muted-foreground">Shipping calculated after order confirmation.</p>
+              {/* <p className="font-sans text-xs text-muted-foreground">Shipping calculated after order confirmation.</p> */}
               <Button asChild size="lg" className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
                 <Link href="/checkout" onClick={closeCart}>Proceed to Checkout</Link>
               </Button>
