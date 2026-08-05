@@ -182,7 +182,7 @@ export default function Home({ params }: { params: Promise<{ id: string }> }) {
     },
   );
   const sizeOptions = isSquare ? SQUARE_SIZE_MAP : SIZE_MAP;
-  const [sizeId, setSizeId] = useState<SizeId>(isSquare ? "8x8" : "16x24");
+  const [sizeId, setSizeId] = useState<SizeId>(isSquare ? "8x8" : "8x12");
   const selectedSize =
     sizeOptions.find((s) => s.sizeId === sizeId) ?? sizeOptions[0];
   const regularPrice = calculatePrice(
@@ -349,7 +349,7 @@ export default function Home({ params }: { params: Promise<{ id: string }> }) {
                 Limited Production Batch
               </div>
             </div>
-            <div className="mt-4 grid grid-cols-3 gap-3">
+            {/* <div className="mt-4 grid grid-cols-3 gap-3">
               {[product?.image, product?.image, product?.image].map(
                 (src, i) => (
                   <div
@@ -364,7 +364,7 @@ export default function Home({ params }: { params: Promise<{ id: string }> }) {
                   </div>
                 ),
               )}
-            </div>
+            </div> */}
           </div>
 
           {/* Details */}
@@ -788,7 +788,8 @@ export default function Home({ params }: { params: Promise<{ id: string }> }) {
                 <span className="text-muted-foreground line-through mr-2">
                   {formatNaira(regularPrice)}
                 </span>
-                {formatNaira(yourPrice)}
+                {formatNaira(yourPrice)} <span className="text-gold font-sans text-[12px] uppercase">(for {sizeId} inches)</span>
+                <p>Scroll down to select a different size</p>
               </p>
             </div>
           </div>
