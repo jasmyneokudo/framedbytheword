@@ -461,7 +461,7 @@ export const PRODUCTS: Product[] = [
     reference: "Philippians.4:6-7",
     qty: 3,
     image: "/frames/23.png",
-    basePrice: 60000,
+    basePrice: 45000,
   },
   {
     id: 29,
