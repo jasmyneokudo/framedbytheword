@@ -31,6 +31,15 @@
   --gold-foreground: oklch(0.20 0.02 260);
   --cream: oklch(0.97 0.01 80);
   --cream-foreground: oklch(0.30 0.02 260);
+/* Walltalk Design Studio sub-brand (scoped to /walltalk) */
+  --wt-ink: oklch(0.19 0.012 110);
+  --wt-ink-soft: oklch(0.44 0.014 110);
+  --wt-paper: oklch(0.985 0.004 90);
+  --wt-cream: oklch(0.955 0.009 88);
+  --wt-sand: oklch(0.92 0.014 86);
+  --wt-olive: oklch(0.47 0.065 122);
+  --wt-olive-deep: oklch(0.35 0.055 122);
+  --wt-line: oklch(0.885 0.012 88);
   --chart-1: oklch(0.72 0.08 75);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -99,8 +108,18 @@
   --color-gold-foreground: var(--gold-foreground);
   --color-cream: var(--cream);
   --color-cream-foreground: var(--cream-foreground);
+  --color-wt-ink: var(--wt-ink);
+  --color-wt-ink-soft: var(--wt-ink-soft);
+  --color-wt-paper: var(--wt-paper);
+  --color-wt-cream: var(--wt-cream);
+  --color-wt-sand: var(--wt-sand);
+  --color-wt-olive: var(--wt-olive);
+  --color-wt-olive-deep: var(--wt-olive-deep);
+  --color-wt-line: var(--wt-line);
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-sans: 'Inter', system-ui, sans-serif;
+  --font-wt-serif: 'Fraunces', Georgia, serif;
+  --font-wt-sans: 'Inter', system-ui, sans-serif;
 }
 
 /* @media (prefers-color-scheme: dark) {
