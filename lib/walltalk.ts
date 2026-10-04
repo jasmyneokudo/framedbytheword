@@ -18,6 +18,7 @@ import hallway1 from "../public/hallway-1.jpg";
 import stairway1 from "../public/stairway-1.jpg";
 import kitchen1 from "../public/kitchen-1.jpg";
 import kitchen2 from "../public/kitchen-2.jpg";
+import { StaticImageData } from "next/image";
 
 // ── Business configuration (edit these values; do not hardcode elsewhere) ──
 export const WT_CONFIG = {
@@ -61,7 +62,7 @@ export interface Service {
   description: string;
   suited: string[];
   cta: string;
-  image: string;
+  image: StaticImageData;
 }
 
 export const SERVICES: Service[] = [
@@ -108,7 +109,7 @@ export interface GalleryCategory {
   description: string;
   contents: string[];
   rooms: string[];
-  image: string;
+  image: StaticImageData;
   featured?: boolean;
 }
 
@@ -118,7 +119,7 @@ const CATEGORY_IMAGES = [
   dining1, kitchen1, livingRoom1, bedroom1, kitchen2,
 ];
 
-function categoryImage(index: number): string {
+function categoryImage(index: number): StaticImageData {
   return CATEGORY_IMAGES[index % CATEGORY_IMAGES.length];
 }
 
@@ -173,7 +174,7 @@ export const GALLERY_CATEGORIES: GalleryCategory[] = [
   { id: "team-culture", name: "Team & Company Culture Wall", description: "People, values and milestones — for offices and professional spaces.", contents: ["Team photographs", "Company values", "Milestones", "Client stories"], rooms: ["Office", "Reception", "Corridor"] },
   { id: "childrens-learning", name: "Children's Learning Wall", description: "Artwork, alphabets and achievements that encourage growing minds.", contents: ["Children's artwork", "Alphabet prints", "Achievements", "Learning charts"], rooms: ["Children's Room", "Playroom", "Hallway"] },
   { id: "seasonal", name: "Seasonal & Celebration Wall", description: "Birthdays, Christmas, naming ceremonies — celebrations worth keeping.", contents: ["Celebration photographs", "Cards", "Dates", "Festive artwork"], rooms: ["Living Room", "Dining Room", "Hallway"] },
-].map((c, i) => ({ ...c, image: (c as { image?: string }).image ?? categoryImage(i) }));
+].map((c, i) => ({ ...c, image: (c as { image?: StaticImageData }).image ?? categoryImage(i) }));
 
 // ── Who is this for ──
 export const WHO_FOR = [
