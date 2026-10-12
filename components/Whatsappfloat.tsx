@@ -1,7 +1,7 @@
 import { IconBrandWhatsapp } from "@tabler/icons-react";
 
 const WHATSAPP_NUMBER = "+2349068661808"; // Replace with your business WhatsApp number
-const WHATSAPP_MESSAGE = "Hi FramedWithTheWord, I have a question about your scripture frames.";
+const WHATSAPP_MESSAGE = "Welcome! Please let us know how we may be of service to you today.";
 
 export function WhatsAppFloat() {
   const href = `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g, "")}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
